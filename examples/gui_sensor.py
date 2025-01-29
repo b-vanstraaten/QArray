@@ -2,9 +2,7 @@
 Author: b-vanstraaten
 Date: 07/12/2024
 """
-
-from qarray import ChargeSensedDotArray
-from qarray.noise_models import WhiteNoise, TelegraphNoise, NoNoise
+from qarray import ChargeSensedDotArray, WhiteNoise, TelegraphNoise, charge_state_changes, LatchingModel
 
 
 # # defining the capacitance matrices for a double dot
@@ -43,7 +41,7 @@ noise_model = WhiteNoise(amplitude=1e-2)
 model = ChargeSensedDotArray(
     Cdd=Cdd, Cgd=Cgd, Cds=Cds, Cgs=Cgs,
     coulomb_peak_width=0.1,
-    T=100, # mK
-    noise_model=noise_model
+    T=50, # mK
+    noise_model=noise_model,
 )
 model.gui(initial_dac_values = initial_dac_values)
