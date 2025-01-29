@@ -1,0 +1,187 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Installation &mdash; Qarray 1.3.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7" />
+
+  
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=1f29e9d3"></script>
+      <script src="_static/doctools.js?v=9bcbadda"></script>
+      <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Getting Started" href="getting_started.html" />
+    <link rel="prev" title="Introduction" href="introduction.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            Qarray
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="introduction.html">Introduction</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Installation</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#macos-installation-from-scratch">macOS installation from scratch</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#jaxlib-gpu">Jaxlib GPU</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="getting_started.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="gui.html">GUI</a></li>
+<li class="toctree-l1"><a class="reference internal" href="advanced_functionality.html">Advanced functionality</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api.html">API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="authors.html">Authors</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Qarray</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Installation</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/installation.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="installation">
+<h1>Installation<a class="headerlink" href="#installation" title="Link to this heading"></a></h1>
+<p>We have tried to precompile the binaries for as many platforms as
+possible. If you are running one of the supported operating systems (which you most likely are), you can
+install QArray via pip:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pip<span class="w"> </span>install<span class="w"> </span>qarray
+</pre></div>
+</div>
+<p>If you slip through the gaps, then the pip install will try to compile
+the binaries for you. This might require you to install some additional
+dependencies. In particular, you will need to have cmake and rust
+installed.</p>
+<p>Install Rust from: <a class="reference external" href="https://www.rust-lang.org/tools/install">https://www.rust-lang.org/tools/install</a></p>
+<p>Install CMake from: <a class="reference external" href="https://cmake.org/download/">https://cmake.org/download/</a>. On macOS and
+Ubuntu, it may be more straightforward to install cmake using homebrew and apt, respectively.</p>
+<p>Also, setting up JAX on macOS running on M series chips can be a bit
+finicky. We outline the steps that worked for us in <a class="reference external" href="#macOS-installation">macOS
+installation</a>. Alternatively, just spin up a
+<a class="reference external" href="https://github.com/codespaces">Github Codespace</a> and
+<code class="docutils literal notranslate"><span class="pre">pip</span> <span class="pre">install</span> <span class="pre">qarray</span></code> for an easy route around the various issues.</p>
+<section id="macos-installation-from-scratch">
+<h2>macOS installation from scratch<a class="headerlink" href="#macos-installation-from-scratch" title="Link to this heading"></a></h2>
+<p>Getting JAX to work macOS on M Series chips can be problematic. Here
+are the steps we used to get everything working starting from a fresh OS
+install.</p>
+<ol class="arabic simple">
+<li><p>Install homebrew from <a class="reference external" href="https://brew.sh">https://brew.sh</a> and run through the install
+script.</p></li>
+<li><p>Use homebrew to install miniconda:</p></li>
+</ol>
+<div class="highlight-zsh notranslate"><div class="highlight"><pre><span></span>brew<span class="w"> </span>install<span class="w">  </span>miniconda
+</pre></div>
+</div>
+<ol class="arabic simple" start="3">
+<li><p>Use homebrew to install cmake:</p></li>
+</ol>
+<div class="highlight-zsh notranslate"><div class="highlight"><pre><span></span>brew<span class="w"> </span>install<span class="w"> </span>cmake
+</pre></div>
+</div>
+<ol class="arabic simple" start="4">
+<li><p>Create a new conda environment and install pip:</p></li>
+</ol>
+<div class="highlight-zsh notranslate"><div class="highlight"><pre><span></span>conda<span class="w"> </span>create<span class="w"> </span>-n<span class="w"> </span>qarray<span class="w"> </span><span class="nv">python</span><span class="o">=</span><span class="m">3</span>.11
+conda<span class="w"> </span>activate<span class="w"> </span>qarray
+conda<span class="w"> </span>install<span class="w"> </span>pip
+</pre></div>
+</div>
+<ol class="arabic simple" start="5">
+<li><p>Install qarray using pip:</p></li>
+</ol>
+<div class="highlight-zsh notranslate"><div class="highlight"><pre><span></span>pip<span class="w"> </span>install<span class="w"> </span>qarray
+</pre></div>
+</div>
+<p>This installation script has been demonstrated to work on macOS Ventura
+13.4 and Sonoma 14.4. To install directly from the repository, use the
+command:</p>
+<div class="highlight-zsh notranslate"><div class="highlight"><pre><span></span>pip<span class="w"> </span>install<span class="w"> </span>git+https://github.com/b-vanstraaten/qarray.git@main
+</pre></div>
+</div>
+</section>
+<section id="jaxlib-gpu">
+<h2>Jaxlib GPU<a class="headerlink" href="#jaxlib-gpu" title="Link to this heading"></a></h2>
+<p>By default we install the CPU version of JAX, with the dependency ‘jax[cpu]&gt;=0.2’, this is done
+for compatibility reasons. If you want to use the GPU version of JAX, you need to install it by running:</p>
+<div class="highlight-zsh notranslate"><div class="highlight"><pre><span></span>pip<span class="w"> </span>install<span class="w"> </span>-U<span class="w"> </span><span class="s2">&quot;jax[cuda12]&quot;</span>
+</pre></div>
+</div>
+<p>This will install the GPU version of JAX with CUDA 12 support. If you are using a different version of CUDA, you can specify it by changing the version number in the brackets.
+For more instructions see here: <a class="reference external" href="https://jax.readthedocs.io/en/latest/installation.html">https://jax.readthedocs.io/en/latest/installation.html</a></p>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="introduction.html" class="btn btn-neutral float-left" title="Introduction" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="getting_started.html" class="btn btn-neutral float-right" title="Getting Started" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright .</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

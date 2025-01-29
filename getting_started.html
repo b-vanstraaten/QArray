@@ -1,0 +1,292 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Getting Started &mdash; Qarray 1.3.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7" />
+
+  
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=1f29e9d3"></script>
+      <script src="_static/doctools.js?v=9bcbadda"></script>
+      <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="GUI" href="gui.html" />
+    <link rel="prev" title="Installation" href="installation.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            Qarray
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="introduction.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Getting Started</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#simulating-charge-stability-diagrams">Simulating charge stability diagrams</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#charge-sensing">Charge sensing</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="gui.html">GUI</a></li>
+<li class="toctree-l1"><a class="reference internal" href="advanced_functionality.html">Advanced functionality</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api.html">API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="authors.html">Authors</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Qarray</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Getting Started</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/getting_started.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="getting-started">
+<h1>Getting Started<a class="headerlink" href="#getting-started" title="Link to this heading"></a></h1>
+<p><img alt="structure" src="_images/structure.png" /></p>
+<section id="simulating-charge-stability-diagrams">
+<h2>Simulating charge stability diagrams<a class="headerlink" href="#simulating-charge-stability-diagrams" title="Link to this heading"></a></h2>
+<p>To get started with QArray all you need is the <cite>DotArray</cite> class. This class stores the capacitance matrices that define your simulated system. It also provides the functionality to calculate the charge configuration of the quantum dot system with the lowest energy given a set of gate voltages.
+Here we will be outlining how to use QArray to produce the stability diagram of a double quantum dot.</p>
+<p>Firstly, we import the DotArray and GateComposer classes:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">qarray</span><span class="w"> </span><span class="kn">import</span> <span class="n">DotArray</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+</pre></div>
+</div>
+<p>Upon initialising the DotArray class, we specify the system’s capacitance matrices:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">model</span> <span class="o">=</span> <span class="n">DotArray</span><span class="p">(</span>
+    <span class="n">Cdd</span> <span class="o">=</span><span class="p">[</span>
+        <span class="p">[</span><span class="mf">0.</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">],</span>
+        <span class="p">[</span><span class="mf">0.1</span><span class="p">,</span> <span class="mf">0.</span><span class="p">]</span> <span class="p">],</span>
+    <span class="n">Cgd</span> <span class="o">=</span><span class="p">[</span>
+        <span class="p">[</span><span class="mf">1.</span><span class="p">,</span> <span class="mf">0.2</span><span class="p">],</span>
+        <span class="p">[</span><span class="mf">0.2</span><span class="p">,</span> <span class="mi">1</span><span class="p">]],</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+<p>Here, <code class="code docutils literal notranslate"><span class="pre">Cdd</span></code> encodes the capacitive couplings between dots (the <code class="code docutils literal notranslate"><span class="pre">dd</span></code> subscript meaning dot-to-dot), and <code class="code docutils literal notranslate"><span class="pre">Cgd</span></code> encodes the capacitive couplings between the dots and the gates (<code class="code docutils literal notranslate"><span class="pre">dg</span></code> being dot-to-gate). These capacitance matrices can also be passed in their Maxwell format, using the keyword arguments <code class="code docutils literal notranslate"><span class="pre">cdd</span></code> and <code class="code docutils literal notranslate"><span class="pre">cgd</span></code>.</p>
+<p>Now to compute the charge stablitiy diagram of an open (reservior mode) double dot when we sweep the plunger gates from -5 to 5 in both the x and y directions, with 100 points in each direction.</p>
+<p>We do this by calling the <code class="code docutils literal notranslate"><span class="pre">do2d_open</span></code> method of the <code class="code docutils literal notranslate"><span class="pre">DotArray</span></code> class. This method returns a (100, 100, 2) array encoding the lowest-energy charge configuration for each combination of gate voltages in the measurement. To
+To sweep over the virtualised plunger gates simply use the arguments ‘vP1’ and ‘vP2’ instead of ‘P1’ and ‘P2’. To sweep over the detuning and onsite energy
+use the</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># run the simulation in the open regime</span>
+<span class="n">n_open</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">do2d_open</span><span class="p">(</span>
+    <span class="n">x_gate</span> <span class="o">=</span> <span class="s1">&#39;P1&#39;</span><span class="p">,</span> <span class="n">x_min</span> <span class="o">=</span> <span class="o">-</span><span class="mi">5</span><span class="p">,</span> <span class="n">x_max</span> <span class="o">=</span> <span class="mi">5</span> <span class="p">,</span> <span class="n">x_res</span> <span class="o">=</span> <span class="mi">100</span><span class="p">,</span>
+    <span class="n">y_gate</span> <span class="o">=</span> <span class="s1">&#39;P2&#39;</span><span class="p">,</span> <span class="n">y_min</span> <span class="o">=</span> <span class="o">-</span><span class="mi">5</span><span class="p">,</span> <span class="n">y_max</span> <span class="o">=</span> <span class="mi">5</span> <span class="p">,</span> <span class="n">y_res</span> <span class="o">=</span> <span class="mi">100</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+<p>To sweep compute the same charge stability diagram in the closed (isolation model) regime we simply call the <code class="code docutils literal notranslate"><span class="pre">do2d_closed</span></code> method of the <code class="code docutils literal notranslate"><span class="pre">DotArray</span></code> class.
+This method returns a (100, 100, 2) again encoding the lowest energy charge configuration for each gate voltage configuration in the measurement. However,
+this time the number of charge carriers in the system is fixed to two.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># run the simulation in the open regime</span>
+<span class="n">n_closed</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">do2d_closed</span><span class="p">(</span>
+    <span class="n">x_gate</span> <span class="o">=</span> <span class="s1">&#39;P1&#39;</span><span class="p">,</span> <span class="n">x_min</span> <span class="o">=</span> <span class="o">-</span><span class="mi">5</span><span class="p">,</span> <span class="n">x_max</span> <span class="o">=</span> <span class="mi">5</span> <span class="p">,</span> <span class="n">x_res</span> <span class="o">=</span> <span class="mi">100</span><span class="p">,</span>
+    <span class="n">y_gate</span> <span class="o">=</span> <span class="s1">&#39;P2&#39;</span><span class="p">,</span> <span class="n">y_min</span> <span class="o">=</span> <span class="o">-</span><span class="mi">5</span><span class="p">,</span> <span class="n">y_max</span> <span class="o">=</span> <span class="mi">5</span> <span class="p">,</span> <span class="n">y_res</span> <span class="o">=</span> <span class="mi">100</span><span class="p">,</span>
+    <span class="n">n_charges</span> <span class="o">=</span> <span class="mi">2</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+<p>With the calculations handled, we can now plot the output. We encode the change in output value due to a dot occupation change in the <code class="code docutils literal notranslate"><span class="pre">charge_state_contrast_array</span></code>.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># importing a function which dots the charge occupation with the charge state contrast to yield a z value for plotting by imshow.</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">qarray</span><span class="w"> </span><span class="kn">import</span> <span class="n">charge_state_to_scalar</span>
+
+
+<span class="c1"># plot the results</span>
+<span class="n">extent</span> <span class="o">=</span><span class="p">(</span><span class="o">-</span><span class="mi">5</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="o">-</span><span class="mi">5</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span>
+
+<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">charge_state_to_scalar</span><span class="p">(</span><span class="n">n_open</span><span class="p">),</span> <span class="n">extent</span><span class="o">=</span><span class="n">extent</span><span class="p">,</span> <span class="n">origin</span><span class="o">=</span><span class="s1">&#39;lower&#39;</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;Blues&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;Open Dot Array&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;P1&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;P2&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">charge_state_to_scalar</span><span class="p">(</span><span class="n">n_closed</span><span class="p">),</span> <span class="n">extent</span><span class="o">=</span><span class="n">extent</span><span class="p">,</span> <span class="n">origin</span><span class="o">=</span><span class="s1">&#39;lower&#39;</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;Blues&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;Closed Dot Array&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;P1&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;P2&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+<p><img alt="getting_started_example_plunger_plunger" src="_images/getting_started_example_plunger_plunger.jpg" /></p>
+<p>However, we are not limted to just sweeping the plunger gates. We can sweep the virtualised plunger gates by charging the
+arguments to ‘vP1’ and ‘vP2’. We can also sweep the detuning and onsite energy by changing the arguments to ‘e1_2’ and ‘U1_2’ respectively.
+This is shown below:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">n_open_detuning</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">do2d_open</span><span class="p">(</span>
+    <span class="n">x_gate</span> <span class="o">=</span> <span class="s1">&#39;e1_2&#39;</span><span class="p">,</span> <span class="n">x_min</span> <span class="o">=</span> <span class="o">-</span><span class="mi">5</span><span class="p">,</span> <span class="n">x_max</span> <span class="o">=</span> <span class="mi">5</span> <span class="p">,</span> <span class="n">x_res</span> <span class="o">=</span> <span class="mi">100</span><span class="p">,</span>
+    <span class="n">y_gate</span> <span class="o">=</span> <span class="s1">&#39;U1_2&#39;</span><span class="p">,</span> <span class="n">y_min</span> <span class="o">=</span> <span class="o">-</span><span class="mi">5</span><span class="p">,</span> <span class="n">y_max</span> <span class="o">=</span> <span class="mi">5</span> <span class="p">,</span> <span class="n">y_res</span> <span class="o">=</span> <span class="mi">100</span>
+<span class="p">)</span>
+
+<span class="n">n_closed_detuning</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">do2d_closed</span><span class="p">(</span>
+    <span class="n">x_gate</span> <span class="o">=</span> <span class="s1">&#39;e1_2&#39;</span><span class="p">,</span> <span class="n">x_min</span> <span class="o">=</span> <span class="o">-</span><span class="mi">5</span><span class="p">,</span> <span class="n">x_max</span> <span class="o">=</span> <span class="mi">5</span> <span class="p">,</span> <span class="n">x_res</span> <span class="o">=</span> <span class="mi">100</span><span class="p">,</span>
+    <span class="n">y_gate</span> <span class="o">=</span> <span class="s1">&#39;U1_2&#39;</span><span class="p">,</span> <span class="n">y_min</span> <span class="o">=</span> <span class="o">-</span><span class="mi">5</span><span class="p">,</span> <span class="n">y_max</span> <span class="o">=</span> <span class="mi">5</span> <span class="p">,</span> <span class="n">y_res</span> <span class="o">=</span> <span class="mi">100</span><span class="p">,</span>
+    <span class="n">n_charges</span> <span class="o">=</span> <span class="mi">2</span>
+<span class="p">)</span>
+
+<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">charge_state_to_scalar</span><span class="p">(</span><span class="n">n_open_detuning</span><span class="p">),</span> <span class="n">extent</span> <span class="o">=</span> <span class="n">extent</span><span class="p">,</span> <span class="n">origin</span><span class="o">=</span><span class="s1">&#39;lower&#39;</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;Blues&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;Open Dot Array&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;e1_2&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;U1_2&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">charge_state_to_scalar</span><span class="p">(</span><span class="n">n_closed_detuning</span><span class="p">),</span> <span class="n">extent</span><span class="o">=</span><span class="n">extent</span><span class="p">,</span> <span class="n">origin</span><span class="o">=</span><span class="s1">&#39;lower&#39;</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;Blues&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;Closed Dot Array&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;e1_2&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;U1_2&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+<p><img alt="getting_started_example_detuning_onsight" src="_images/getting_started_example_detuning_onsite.jpg" /></p>
+<p>The <cite>DotArray</cite> class init has additional arguments that we left at their default values for the example above. For more control over your simulation, you may wish to use any of the following:</p>
+<ul class="simple">
+<li><p><cite>algorithm</cite> : str : The algorithm used to calculate the ground state of the quantum dot system. The default is ‘default’, with the alternatives being ‘brute_force’ and ‘thresholded’.</p></li>
+<li><p><cite>implementation</cite> : str : The implementation used to calculate the ground state of the quantum dot system. The default is ‘rust’, with the alternatives being ‘python’ and ‘jax’ for GPU acceleration.</p></li>
+<li><p><cite>T</cite> : float : The temperature of the system in kelvin to simulate thermal broadening. The default is 0.</p></li>
+<li><p><cite>charge_carrier</cite>: str : The charge carrier used in the simulation. The default is ‘hole’, with the alternative being ‘electron’.</p></li>
+<li><p><cite>threshold</cite> : float : The threshold used in the thresholded algorithm (see Section III B 2 of <a class="reference external" href="https://arxiv.org/pdf/2404.04994">the paper</a>).</p></li>
+<li><p><cite>max_charge_carriers</cite>: int : The maximum number of charge carriers that can be on a dot, when using the brute_force algorithm.</p></li>
+</ul>
+</section>
+<section id="charge-sensing">
+<h2>Charge sensing<a class="headerlink" href="#charge-sensing" title="Link to this heading"></a></h2>
+<p>To simulate a charge sensing measurement, we use the <code class="code docutils literal notranslate"><span class="pre">ChargeSensedDotArray</span></code> class. This class is functionally similar to the <code class="code docutils literal notranslate"><span class="pre">DotArray</span></code> class, but includes a quantum dot charge sensor coupled to the device array. We can control the strength of this coupling via the two additional matrices that it is necessary to include upon initialising the <code class="code docutils literal notranslate"><span class="pre">ChargeSensedDotArray</span></code> class. The first (<code class="code docutils literal notranslate"><span class="pre">Cds</span></code>) specifies the strength  of the coupling between the device array’s dots and the charge sensor, and the second (<code class="code docutils literal notranslate"><span class="pre">Cgs</span></code>) specifies the strength of the coupling between the device array’s gates and the charge sensor. The width of the Coulomb peak in the simulated charge sensing quantum dot is passed via the <code class="code docutils literal notranslate"><span class="pre">coulomb_peak_width</span></code> keyword argument.</p>
+<p>The snippet below is an example of how we can use these classes to generate a charge-sensed measurement.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">qarray</span><span class="w"> </span><span class="kn">import</span> <span class="n">ChargeSensedDotArray</span>
+
+<span class="c1"># defining the capacitance matrices</span>
+<span class="n">Cdd</span> <span class="o">=</span> <span class="p">[[</span><span class="mf">0.</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">],</span> <span class="p">[</span><span class="mf">0.1</span><span class="p">,</span> <span class="mf">0.</span><span class="p">]]</span>  <span class="c1"># an (n_dot, n_dot) array of the capacitive coupling between dots</span>
+<span class="n">Cgd</span> <span class="o">=</span> <span class="p">[[</span><span class="mf">1.</span><span class="p">,</span> <span class="mf">0.6</span><span class="p">,</span> <span class="mf">0.05</span><span class="p">],</span> <span class="p">[</span><span class="mf">0.2</span><span class="p">,</span> <span class="mf">1.</span><span class="p">,</span> <span class="mf">0.05</span><span class="p">],</span> <span class="p">]</span>  <span class="c1"># an (n_dot, n_gate) array of the capacitive coupling between gates and dots</span>
+<span class="n">Cds</span> <span class="o">=</span> <span class="p">[[</span><span class="mf">0.02</span><span class="p">,</span> <span class="mf">0.01</span><span class="p">]]</span>  <span class="c1"># an (n_sensor, n_dot) array of the capacitive coupling between dots and sensors</span>
+<span class="n">Cgs</span> <span class="o">=</span> <span class="p">[[</span><span class="mf">0.06</span><span class="p">,</span> <span class="mf">0.05</span><span class="p">,</span> <span class="mi">1</span><span class="p">]]</span>  <span class="c1"># an (n_sensor, n_gate) array of the capacitive coupling between gates and sensor dots</span>
+
+<span class="c1"># creating the model</span>
+<span class="n">model</span> <span class="o">=</span> <span class="n">ChargeSensedDotArray</span><span class="p">(</span>
+    <span class="n">Cdd</span><span class="o">=</span><span class="n">Cdd</span><span class="p">,</span> <span class="n">Cgd</span><span class="o">=</span><span class="n">Cgd</span><span class="p">,</span> <span class="n">Cds</span><span class="o">=</span><span class="n">Cds</span><span class="p">,</span> <span class="n">Cgs</span><span class="o">=</span><span class="n">Cgs</span><span class="p">,</span>
+    <span class="n">coulomb_peak_width</span><span class="o">=</span><span class="mf">0.05</span><span class="p">,</span> <span class="n">T</span><span class="o">=</span><span class="mi">100</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+<p>It is important to note that for the double dot there are now three gates,
+one for each dot and one for the charge sensor. The index 0 corresponds to the first dot,
+index 1 to the second dot and index 2 to the charge sensor. For this example we will sweep the plunger gates of the double dot,
+however, this time we will do it in a slightly different way, using the gate voltage composer calss to create the gate voltage sweep.
+This class is used behind the scenes in the <code class="code docutils literal notranslate"><span class="pre">do2d_open</span></code> and <code class="code docutils literal notranslate"><span class="pre">do2d_closed</span></code> methods of the <code class="code docutils literal notranslate"><span class="pre">DotArray</span></code> class. However,
+using it explicitly allows us to create more complex sweeps, such as the one we will do here. We will make use of
+an addition piece of functionality, provided by both the <code class="code docutils literal notranslate"><span class="pre">DotArray</span></code> and <code class="code docutils literal notranslate"><span class="pre">ChargeSensedDotArray</span></code> classes, which is the
+<code class="code docutils literal notranslate"><span class="pre">optimal_Vg</span></code> method. This method returns the optimal gate voltages which minimise the free energy of a given charge state.
+For example, if we have a charge state of <cite>[1., 1., 1.]</cite> (in the case of two array dots and one charge sensing dot), the <cite>optimal_Vg</cite> method will return the gate voltages that configure the simulated device to be in the middle of the [1, 1] charge state and directly on top of the first Coloumb peak in the charge sensor. If the user passes <cite>[0.5, 0.5, 0.5]</cite>, the
+method will return the gate voltages corresponding to the middle of the [0, 1] - [1,0] interdot charge transition and exactly halfway between two Coulomb peaks in the charge sensing dot. This can be useful for centring your simulation on a specific charge transition or state, as demonstrated in the snippet below.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># defining the min and max values for the dot voltage sweep</span>
+<span class="n">vx_min</span><span class="p">,</span> <span class="n">vx_max</span> <span class="o">=</span> <span class="o">-</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span>
+<span class="n">vy_min</span><span class="p">,</span> <span class="n">vy_max</span> <span class="o">=</span> <span class="o">-</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span>
+<span class="c1"># using the dot voltage composer to create the dot voltage array for the 2d sweep</span>
+<span class="n">vg</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">gate_voltage_composer</span><span class="o">.</span><span class="n">do2d</span><span class="p">(</span><span class="s1">&#39;P1&#39;</span><span class="p">,</span> <span class="n">vy_min</span><span class="p">,</span> <span class="n">vx_max</span><span class="p">,</span> <span class="mi">100</span><span class="p">,</span> <span class="s1">&#39;P2&#39;</span><span class="p">,</span> <span class="n">vy_min</span><span class="p">,</span> <span class="n">vy_max</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span>
+
+<span class="c1"># centering the voltage sweep on the [0, 1] - [1, 0] interdot charge transition on the side of a charge sensor coulomb peak</span>
+<span class="n">vg</span> <span class="o">+=</span> <span class="n">model</span><span class="o">.</span><span class="n">optimal_Vg</span><span class="p">([</span><span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.6</span><span class="p">])</span>
+
+
+<span class="c1"># calculating the output of the charge sensor and the charge state for each gate voltage</span>
+<span class="n">z</span><span class="p">,</span> <span class="n">n</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">charge_sensor_open</span><span class="p">(</span><span class="n">vg</span><span class="p">)</span>
+<span class="n">dz_dV1</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">gradient</span><span class="p">(</span><span class="n">z</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">gradient</span><span class="p">(</span><span class="n">z</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>We can plot the output of the charge sensor and its gradient with respect to the gate voltages:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="p">,</span> <span class="n">axes</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">sharex</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">sharey</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">fig</span><span class="o">.</span><span class="n">set_size_inches</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span>
+
+<span class="c1"># plotting the charge stability diagram</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">z</span><span class="p">,</span> <span class="n">extent</span><span class="o">=</span><span class="p">[</span><span class="n">vx_min</span><span class="p">,</span> <span class="n">vx_max</span><span class="p">,</span> <span class="n">vy_min</span><span class="p">,</span> <span class="n">vy_max</span><span class="p">],</span> <span class="n">origin</span><span class="o">=</span><span class="s1">&#39;lower&#39;</span><span class="p">,</span> <span class="n">aspect</span><span class="o">=</span><span class="s1">&#39;auto&#39;</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;hot&#39;</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;$Vx$&#39;</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;$Vy$&#39;</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;$z$&#39;</span><span class="p">)</span>
+
+<span class="c1"># plotting the charge sensor output</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">dz_dV1</span><span class="p">,</span> <span class="n">extent</span><span class="o">=</span><span class="p">[</span><span class="n">vx_min</span><span class="p">,</span> <span class="n">vx_max</span><span class="p">,</span> <span class="n">vy_min</span><span class="p">,</span> <span class="n">vy_max</span><span class="p">],</span> <span class="n">origin</span><span class="o">=</span><span class="s1">&#39;lower&#39;</span><span class="p">,</span> <span class="n">aspect</span><span class="o">=</span><span class="s1">&#39;auto&#39;</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;hot&#39;</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;$Vx$&#39;</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;$Vy$&#39;</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;$</span><span class="se">\\</span><span class="s1">frac</span><span class="si">{dz}{dVx}</span><span class="s1"> + </span><span class="se">\\</span><span class="s1">frac</span><span class="si">{dz}{dVy}</span><span class="s1">$&#39;</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>The output of the code above is shown below:
+<img alt="charge_sensing" src="_images/charge_sensing.jpg" /></p>
+<p>Whilst this plot looks closer to what we see experimentally, we are missing noise. See the examples section for how to do this.</p>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="installation.html" class="btn btn-neutral float-left" title="Installation" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="gui.html" class="btn btn-neutral float-right" title="GUI" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright .</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

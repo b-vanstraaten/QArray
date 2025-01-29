@@ -1,0 +1,252 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Advanced functionality &mdash; Qarray 1.3.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7" />
+
+  
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=1f29e9d3"></script>
+      <script src="_static/doctools.js?v=9bcbadda"></script>
+      <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="API" href="api.html" />
+    <link rel="prev" title="GUI" href="gui.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            Qarray
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="introduction.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="getting_started.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="gui.html">GUI</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Advanced functionality</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#including-noise-in-the-simulation">Including noise in the simulation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#latching">Latching</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="api.html">API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="authors.html">Authors</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Qarray</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Advanced functionality</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/advanced_functionality.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="advanced-functionality">
+<h1>Advanced functionality<a class="headerlink" href="#advanced-functionality" title="Link to this heading"></a></h1>
+<p>Here we will provide some examples which show off some of the more advanced functionally
+provided by QArray.</p>
+<section id="including-noise-in-the-simulation">
+<h2>Including noise in the simulation<a class="headerlink" href="#including-noise-in-the-simulation" title="Link to this heading"></a></h2>
+<p>To add noise to the simulation, we can import some of noise classes provided by QArray. In the example below we demonstrate the use of the <code class="code docutils literal notranslate"><span class="pre">WhiteNoise</span></code> and <code class="code docutils literal notranslate"><span class="pre">TelegraphNoise</span></code> classes.</p>
+<p>The <code class="code docutils literal notranslate"><span class="pre">WhiteNoise</span></code> class adds white noise to the simulation, of a particular amplitude (std).
+The <code class="code docutils literal notranslate"><span class="pre">TelegraphNoise</span></code> simulates a charge trap randomly switching near the charge sensor. The probabilities
+of the trap switching between the two states are given by <code class="code docutils literal notranslate"><span class="pre">p01</span></code> and <code class="code docutils literal notranslate"><span class="pre">p10</span></code>.
+The amplitude of the noise is given by <code class="code docutils literal notranslate"><span class="pre">amplitude</span></code>.</p>
+<p>In addition, all our noise models overload the <cite>+</cite> operator,
+so we can combine them to create more complex noise models.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">qarray</span><span class="w"> </span><span class="kn">import</span> <span class="n">ChargeSensedDotArray</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">qarray.noise_models</span><span class="w"> </span><span class="kn">import</span> <span class="n">WhiteNoise</span><span class="p">,</span> <span class="n">TelegraphNoise</span><span class="p">,</span> <span class="n">NoNoise</span>
+
+<span class="c1"># defining the capacitance matrices</span>
+<span class="n">Cdd</span> <span class="o">=</span> <span class="p">[[</span><span class="mf">0.</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">],</span> <span class="p">[</span><span class="mf">0.1</span><span class="p">,</span> <span class="mf">0.</span><span class="p">]]</span>  <span class="c1"># an (n_dot, n_dot) array of the capacitive coupling between dots</span>
+<span class="n">Cgd</span> <span class="o">=</span> <span class="p">[[</span><span class="mf">1.</span><span class="p">,</span> <span class="mf">0.6</span><span class="p">,</span> <span class="mf">0.05</span><span class="p">],</span> <span class="p">[</span><span class="mf">0.2</span><span class="p">,</span> <span class="mf">1.</span><span class="p">,</span> <span class="mf">0.05</span><span class="p">],</span> <span class="p">]</span>  <span class="c1"># an (n_dot, n_gate) array of the capacitive coupling between gates and dots</span>
+<span class="n">Cds</span> <span class="o">=</span> <span class="p">[[</span><span class="mf">0.02</span><span class="p">,</span> <span class="mf">0.01</span><span class="p">]]</span>  <span class="c1"># an (n_sensor, n_dot) array of the capacitive coupling between dots and sensors</span>
+<span class="n">Cgs</span> <span class="o">=</span> <span class="p">[[</span><span class="mf">0.06</span><span class="p">,</span> <span class="mf">0.05</span><span class="p">,</span> <span class="mi">1</span><span class="p">]]</span>  <span class="c1"># an (n_sensor, n_gate) array of the capacitive coupling between gates and sensor dots</span>
+
+<span class="c1"># creating the model</span>
+<span class="n">model</span> <span class="o">=</span> <span class="n">ChargeSensedDotArray</span><span class="p">(</span>
+    <span class="n">Cdd</span><span class="o">=</span><span class="n">Cdd</span><span class="p">,</span> <span class="n">Cgd</span><span class="o">=</span><span class="n">Cgd</span><span class="p">,</span> <span class="n">Cds</span><span class="o">=</span><span class="n">Cds</span><span class="p">,</span> <span class="n">Cgs</span><span class="o">=</span><span class="n">Cgs</span><span class="p">,</span>
+    <span class="n">coulomb_peak_width</span><span class="o">=</span><span class="mf">0.05</span><span class="p">,</span> <span class="n">T</span><span class="o">=</span><span class="mi">100</span>
+<span class="p">)</span>
+
+
+<span class="c1"># defining the min and max values for the dot voltage sweep</span>
+<span class="n">vx_min</span><span class="p">,</span> <span class="n">vx_max</span> <span class="o">=</span> <span class="o">-</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span>
+<span class="n">vy_min</span><span class="p">,</span> <span class="n">vy_max</span> <span class="o">=</span> <span class="o">-</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span>
+<span class="c1"># using the dot voltage composer to create the dot voltage array for the 2d sweep</span>
+<span class="n">vg</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">gate_voltage_composer</span><span class="o">.</span><span class="n">do2d</span><span class="p">(</span><span class="s1">&#39;P1&#39;</span><span class="p">,</span> <span class="n">vy_min</span><span class="p">,</span> <span class="n">vx_max</span><span class="p">,</span> <span class="mi">100</span><span class="p">,</span> <span class="s1">&#39;P2&#39;</span><span class="p">,</span> <span class="n">vy_min</span><span class="p">,</span> <span class="n">vy_max</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span>
+
+<span class="c1"># centering the voltage sweep on the [0, 1] - [1, 0] interdot charge transition on the side of a charge sensor coulomb peak</span>
+<span class="n">vg</span> <span class="o">+=</span> <span class="n">model</span><span class="o">.</span><span class="n">optimal_Vg</span><span class="p">([</span><span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.6</span><span class="p">])</span>
+
+<span class="c1"># defining a white noise model with an amplitude of 1e-2</span>
+<span class="n">white_noise</span> <span class="o">=</span> <span class="n">WhiteNoise</span><span class="p">(</span><span class="n">amplitude</span><span class="o">=</span><span class="mf">1e-2</span><span class="p">)</span>
+
+<span class="c1"># defining a telegraph noise model with p01 = 5e-4, p10 = 5e-3 and an amplitude of 1e-2</span>
+<span class="n">random_telegraph_noise</span> <span class="o">=</span> <span class="n">TelegraphNoise</span><span class="p">(</span><span class="n">p01</span><span class="o">=</span><span class="mf">5e-4</span><span class="p">,</span> <span class="n">p10</span><span class="o">=</span><span class="mf">5e-3</span><span class="p">,</span> <span class="n">amplitude</span><span class="o">=</span><span class="mf">1e-2</span><span class="p">)</span>
+
+<span class="c1"># combining the white and telegraph noise models</span>
+<span class="n">combined_noise</span> <span class="o">=</span> <span class="n">white_noise</span> <span class="o">+</span> <span class="n">random_telegraph_noise</span>
+
+<span class="c1"># defining the noise models</span>
+<span class="n">noise_models</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="n">NoNoise</span><span class="p">(),</span>  <span class="c1"># no noise</span>
+    <span class="n">white_noise</span><span class="p">,</span>  <span class="c1"># white noise</span>
+    <span class="n">random_telegraph_noise</span><span class="p">,</span>  <span class="c1"># telegraph noise</span>
+    <span class="n">combined_noise</span><span class="p">,</span>  <span class="c1"># white + telegraph noise</span>
+<span class="p">]</span>
+
+<span class="c1"># plotting</span>
+<span class="n">fig</span><span class="p">,</span> <span class="n">axes</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">sharex</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">sharey</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">fig</span><span class="o">.</span><span class="n">set_size_inches</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span>
+
+<span class="k">for</span> <span class="n">ax</span><span class="p">,</span> <span class="n">noise_model</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">axes</span><span class="o">.</span><span class="n">flatten</span><span class="p">(),</span> <span class="n">noise_models</span><span class="p">):</span>
+    <span class="n">model</span><span class="o">.</span><span class="n">noise_model</span> <span class="o">=</span> <span class="n">noise_model</span>
+
+    <span class="c1"># fixing the seed so subsequent runs are yield identical noise</span>
+    <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+    <span class="n">z</span><span class="p">,</span> <span class="n">n</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">charge_sensor_open</span><span class="p">(</span><span class="n">vg</span><span class="p">)</span>
+
+    <span class="n">ax</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">z</span><span class="p">,</span> <span class="n">extent</span><span class="o">=</span><span class="p">[</span><span class="n">vx_min</span><span class="p">,</span> <span class="n">vx_max</span><span class="p">,</span> <span class="n">vy_min</span><span class="p">,</span> <span class="n">vy_max</span><span class="p">],</span> <span class="n">origin</span><span class="o">=</span><span class="s1">&#39;lower&#39;</span><span class="p">,</span> <span class="n">aspect</span><span class="o">=</span><span class="s1">&#39;auto&#39;</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;hot&#39;</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;$Vx$&#39;</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;$Vy$&#39;</span><span class="p">)</span>
+
+<span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;No Noise&#39;</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;White Noise&#39;</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;Telegraph Noise&#39;</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;White + Telegraph Noise&#39;</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+</pre></div>
+</div>
+<p><img alt="charge_sensing_noise" src="_images/charge_sensing_noise.jpg" /></p>
+</section>
+<section id="latching">
+<h2>Latching<a class="headerlink" href="#latching" title="Link to this heading"></a></h2>
+<p>Within QArray we provide two latching models: <code class="code docutils literal notranslate"><span class="pre">LatchingModel</span></code> and <code class="code docutils literal notranslate"><span class="pre">PSBLatchingModel</span></code>. The <code class="code docutils literal notranslate"><span class="pre">LatchingModel</span></code> simulates latching on the transitions to the leads and inter-dot transitions, caused in reality by slow tunnel rates. The <code class="code docutils literal notranslate"><span class="pre">PSBLatchingModel</span></code> simulates latching only when the moving from (1, 1) to (0, 2) as indicative of Pauli spin blockade.
+As in the real world, there is a polarity to this latching, based on the direction in the transition is crossed.
+In this section, we demonstrate the use of the <code class="code docutils literal notranslate"><span class="pre">LatchingModel</span></code> with the <code class="code docutils literal notranslate"><span class="pre">ChargeSensedDotArray</span></code> class.</p>
+<p>To begin, we import the necessary elements and define the capacitance matrices.
+We then define the latching model and the charge sensed dot array model. The latching model class
+takes three arguments:</p>
+<ul class="simple">
+<li><p>The number of dots in the device array.</p></li>
+<li><p>A vector, <code class="code docutils literal notranslate"><span class="pre">p_leads</span></code>, encoding information about the tunnel rate to the leads. The elements are such that if the voltage configuration crosses the (N, M) -&gt; (N + 1, M) charge transition, <code class="code docutils literal notranslate"><span class="pre">p_leads[0]</span></code> is the probability that the dot’s charge configuration will change from (N, M) to (N + 1, M) in the next pixel of the charge stability diagram. In our case we set both probabilities to <cite>0.25</cite>.</p></li>
+<li><p>A matrix, <code class="code docutils literal notranslate"><span class="pre">p_inter</span></code>, encoding information about the tunnel rates between dots. These elements are such that if the (N, M) -&gt; (N - 1, M + 1) charge transition is crossed, <code class="code docutils literal notranslate"><span class="pre">p_inter[0][1]</span></code> is the probability that the dot’s charge configuration will change from (N, M) to (N - 1, M + 1) in the next pixel of the charge stability diagram. Note that the unlatched case, the probability of this transition is <cite>1</cite>. The diagonal elements of the matrix are not used. In the example below we set the off-diagonals to 1, meaning no latching will occur on the inter-dot transition.</p></li>
+</ul>
+<p>Alternatively, we can use the Pauli spin blockade latching model via <code class="code docutils literal notranslate"><span class="pre">PSBLatchingModel</span></code>. This model only has one parameter, which is the probability of latching when moving from the (1, 1) to (0, 2) charge states as indicative of PSB.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># a latching model which simulates latching only when the moving from (1, 1) to (0, 2) as indicative of PSB</span>
+<span class="n">latching_model</span> <span class="o">=</span> <span class="n">PSBLatchingModel</span><span class="p">(</span>
+    <span class="n">n_dots</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span>
+    <span class="n">p_psb</span><span class="o">=</span><span class="mf">0.2</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+<p>With our array and latching models defined, we use the <code class="code docutils literal notranslate"><span class="pre">GateVoltageComposer</span></code> to create a gate voltage sweep and the <code class="code docutils literal notranslate"><span class="pre">optimal_Vg</span></code> method to find the optimal gate voltages in the same way as before. We plot the output of the charge sensor, shown below.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># creating the voltage composer</span>
+<span class="n">voltage_composer</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">gate_voltage_composer</span>
+
+<span class="c1"># defining the min and max values for the dot voltage sweep</span>
+<span class="n">vx_min</span><span class="p">,</span> <span class="n">vx_max</span> <span class="o">=</span> <span class="o">-</span><span class="mi">20</span><span class="p">,</span> <span class="mi">5</span>
+<span class="n">vy_min</span><span class="p">,</span> <span class="n">vy_max</span> <span class="o">=</span> <span class="o">-</span><span class="mi">20</span><span class="p">,</span> <span class="mi">5</span>
+<span class="c1"># using the dot voltage composer to create the dot voltage array for the 2d sweep</span>
+<span class="n">vg</span> <span class="o">=</span> <span class="n">voltage_composer</span><span class="o">.</span><span class="n">do2d</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">vy_min</span><span class="p">,</span> <span class="n">vx_max</span><span class="p">,</span> <span class="mi">200</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">vy_min</span><span class="p">,</span> <span class="n">vy_max</span><span class="p">,</span> <span class="mi">200</span><span class="p">)</span>
+<span class="n">vg</span> <span class="o">+=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="o">-</span><span class="mf">5.05</span><span class="p">])</span>
+
+<span class="n">t0</span> <span class="o">=</span> <span class="n">perf_counter</span><span class="p">()</span>
+<span class="n">z</span><span class="p">,</span> <span class="n">n</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">charge_sensor_open</span><span class="p">(</span><span class="n">vg</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Elapsed time: </span><span class="si">{</span><span class="n">perf_counter</span><span class="p">()</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">t0</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2"> s&quot;</span><span class="p">)</span>
+
+<span class="n">fig</span><span class="p">,</span> <span class="n">axes</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">sharex</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">sharey</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">fig</span><span class="o">.</span><span class="n">set_size_inches</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span>
+
+<span class="c1"># plotting the charge stability diagram</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">z</span><span class="p">,</span> <span class="n">extent</span><span class="o">=</span><span class="p">[</span><span class="n">vx_min</span><span class="p">,</span> <span class="n">vx_max</span><span class="p">,</span> <span class="n">vy_min</span><span class="p">,</span> <span class="n">vy_max</span><span class="p">],</span> <span class="n">origin</span><span class="o">=</span><span class="s1">&#39;lower&#39;</span><span class="p">,</span> <span class="n">aspect</span><span class="o">=</span><span class="s1">&#39;auto&#39;</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;hot&#39;</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;$Vx$&#39;</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;$Vy$&#39;</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;$z$&#39;</span><span class="p">)</span>
+
+<span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">charge_state_changes</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="n">n</span><span class="p">)),</span> <span class="n">extent</span><span class="o">=</span><span class="p">[</span><span class="n">vx_min</span><span class="p">,</span> <span class="n">vx_max</span><span class="p">,</span> <span class="n">vy_min</span><span class="p">,</span> <span class="n">vy_max</span><span class="p">],</span> <span class="n">origin</span><span class="o">=</span><span class="s1">&#39;lower&#39;</span><span class="p">,</span>
+               <span class="n">aspect</span><span class="o">=</span><span class="s1">&#39;auto&#39;</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;hot&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+<p><img alt="latching" src="_images/latching.jpg" /></p>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="gui.html" class="btn btn-neutral float-left" title="GUI" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="api.html" class="btn btn-neutral float-right" title="API" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright .</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

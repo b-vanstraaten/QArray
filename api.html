@@ -1,0 +1,835 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>API &mdash; Qarray 1.3.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7" />
+
+  
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=1f29e9d3"></script>
+      <script src="_static/doctools.js?v=9bcbadda"></script>
+      <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Authors" href="authors.html" />
+    <link rel="prev" title="Advanced functionality" href="advanced_functionality.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            Qarray
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="introduction.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="getting_started.html">Getting Started</a></li>
+<li class="toctree-l1"><a class="reference internal" href="gui.html">GUI</a></li>
+<li class="toctree-l1"><a class="reference internal" href="advanced_functionality.html">Advanced functionality</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">API</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#qarray.ChargeSensedDotArray"><code class="docutils literal notranslate"><span class="pre">ChargeSensedDotArray</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#qarray.ChargeSensedDotArray.charge_sensor_closed"><code class="docutils literal notranslate"><span class="pre">ChargeSensedDotArray.charge_sensor_closed()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#qarray.ChargeSensedDotArray.charge_sensor_open"><code class="docutils literal notranslate"><span class="pre">ChargeSensedDotArray.charge_sensor_open()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#qarray.ChargeSensedDotArray.check_threshold"><code class="docutils literal notranslate"><span class="pre">ChargeSensedDotArray.check_threshold()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#qarray.ChargeSensedDotArray.compute_optimal_virtual_gate_matrix"><code class="docutils literal notranslate"><span class="pre">ChargeSensedDotArray.compute_optimal_virtual_gate_matrix()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#qarray.ChargeSensedDotArray.compute_threshold_estimate"><code class="docutils literal notranslate"><span class="pre">ChargeSensedDotArray.compute_threshold_estimate()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#qarray.ChargeSensedDotArray.do1d_closed"><code class="docutils literal notranslate"><span class="pre">ChargeSensedDotArray.do1d_closed()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#qarray.ChargeSensedDotArray.do1d_open"><code class="docutils literal notranslate"><span class="pre">ChargeSensedDotArray.do1d_open()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#qarray.ChargeSensedDotArray.do2d_closed"><code class="docutils literal notranslate"><span class="pre">ChargeSensedDotArray.do2d_closed()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#qarray.ChargeSensedDotArray.do2d_open"><code class="docutils literal notranslate"><span class="pre">ChargeSensedDotArray.do2d_open()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#qarray.ChargeSensedDotArray.ground_state_closed"><code class="docutils literal notranslate"><span class="pre">ChargeSensedDotArray.ground_state_closed()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#qarray.ChargeSensedDotArray.ground_state_open"><code class="docutils literal notranslate"><span class="pre">ChargeSensedDotArray.ground_state_open()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#qarray.ChargeSensedDotArray.gui"><code class="docutils literal notranslate"><span class="pre">ChargeSensedDotArray.gui()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#qarray.ChargeSensedDotArray.optimal_Vg"><code class="docutils literal notranslate"><span class="pre">ChargeSensedDotArray.optimal_Vg()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#qarray.DotArray"><code class="docutils literal notranslate"><span class="pre">DotArray</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#qarray.DotArray.compute_optimal_virtual_gate_matrix"><code class="docutils literal notranslate"><span class="pre">DotArray.compute_optimal_virtual_gate_matrix()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#qarray.DotArray.compute_threshold_estimate"><code class="docutils literal notranslate"><span class="pre">DotArray.compute_threshold_estimate()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#qarray.DotArray.do1d_closed"><code class="docutils literal notranslate"><span class="pre">DotArray.do1d_closed()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#qarray.DotArray.do1d_open"><code class="docutils literal notranslate"><span class="pre">DotArray.do1d_open()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#qarray.DotArray.do2d_closed"><code class="docutils literal notranslate"><span class="pre">DotArray.do2d_closed()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#qarray.DotArray.do2d_open"><code class="docutils literal notranslate"><span class="pre">DotArray.do2d_open()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#qarray.DotArray.free_energy"><code class="docutils literal notranslate"><span class="pre">DotArray.free_energy()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#qarray.DotArray.ground_state_closed"><code class="docutils literal notranslate"><span class="pre">DotArray.ground_state_closed()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#qarray.DotArray.ground_state_open"><code class="docutils literal notranslate"><span class="pre">DotArray.ground_state_open()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#qarray.DotArray.optimal_Vg"><code class="docutils literal notranslate"><span class="pre">DotArray.optimal_Vg()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#qarray.DotArray.run_gui"><code class="docutils literal notranslate"><span class="pre">DotArray.run_gui()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#qarray.DotArray.update_capacitance_matrices"><code class="docutils literal notranslate"><span class="pre">DotArray.update_capacitance_matrices()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#qarray.GateVoltageComposer"><code class="docutils literal notranslate"><span class="pre">GateVoltageComposer</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#qarray.GateVoltageComposer.do1d"><code class="docutils literal notranslate"><span class="pre">GateVoltageComposer.do1d()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#qarray.GateVoltageComposer.do2d"><code class="docutils literal notranslate"><span class="pre">GateVoltageComposer.do2d()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#qarray.GateVoltageComposer.meshgrid"><code class="docutils literal notranslate"><span class="pre">GateVoltageComposer.meshgrid()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#qarray.GateVoltageComposer.meshgrid_virtual"><code class="docutils literal notranslate"><span class="pre">GateVoltageComposer.meshgrid_virtual()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#qarray.charge_state_changes"><code class="docutils literal notranslate"><span class="pre">charge_state_changes()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#qarray.charge_state_dot_product"><code class="docutils literal notranslate"><span class="pre">charge_state_dot_product()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#qarray.charge_state_to_scalar"><code class="docutils literal notranslate"><span class="pre">charge_state_to_scalar()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#qarray.compute_optimal_virtual_gate_matrix"><code class="docutils literal notranslate"><span class="pre">compute_optimal_virtual_gate_matrix()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#qarray.dot_occupation_changes"><code class="docutils literal notranslate"><span class="pre">dot_occupation_changes()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#qarray.noise_models.BaseNoiseModel"><code class="docutils literal notranslate"><span class="pre">BaseNoiseModel</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#qarray.noise_models.BaseNoiseModel.sample_input_noise"><code class="docutils literal notranslate"><span class="pre">BaseNoiseModel.sample_input_noise()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#qarray.noise_models.BaseNoiseModel.sample_output_noise"><code class="docutils literal notranslate"><span class="pre">BaseNoiseModel.sample_output_noise()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#qarray.noise_models.NoNoise"><code class="docutils literal notranslate"><span class="pre">NoNoise</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#qarray.noise_models.TelegraphNoise"><code class="docutils literal notranslate"><span class="pre">TelegraphNoise</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#qarray.noise_models.TelegraphNoise.sample_input_noise"><code class="docutils literal notranslate"><span class="pre">TelegraphNoise.sample_input_noise()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#qarray.noise_models.WhiteNoise"><code class="docutils literal notranslate"><span class="pre">WhiteNoise</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#qarray.noise_models.WhiteNoise.sample_output_noise"><code class="docutils literal notranslate"><span class="pre">WhiteNoise.sample_output_noise()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#qarray.latching_models.LatchingBaseModel"><code class="docutils literal notranslate"><span class="pre">LatchingBaseModel</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#qarray.latching_models.LatchingModel"><code class="docutils literal notranslate"><span class="pre">LatchingModel</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#qarray.latching_models.LatchingModel.add_latching"><code class="docutils literal notranslate"><span class="pre">LatchingModel.add_latching()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#qarray.latching_models.PSBLatchingModel"><code class="docutils literal notranslate"><span class="pre">PSBLatchingModel</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#qarray.latching_models.PSBLatchingModel.add_latching"><code class="docutils literal notranslate"><span class="pre">PSBLatchingModel.add_latching()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="authors.html">Authors</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Qarray</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">API</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/api.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="module-qarray">
+<span id="api"></span><h1>API<a class="headerlink" href="#module-qarray" title="Link to this heading"></a></h1>
+<p>Qarray, a GPU accelerated quantum dot array simulator, leveraging parallelised Rust and JAX XLA acceleration
+to compute charge stability diagrams of large both open and closed arrays in milliseconds.</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="qarray.ChargeSensedDotArray">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">qarray.</span></span><span class="sig-name descname"><span class="pre">ChargeSensedDotArray</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">Cdd</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">CddNonMaxwell</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Cgd</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">CgdNonMaxwell</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Cds</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">CdsNonMaxwell</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Cgs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">CgsNonMaxwell</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">algorithm</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'default'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">implementation</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'rust'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">threshold</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_charge_carriers</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">polish</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">batch_size</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">charge_carrier</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'h'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">T</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_peak</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">5</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">coulomb_peak_width</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0.1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">noise_model</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#qarray.noise_models.BaseNoiseModel" title="qarray.noise_models.BaseNoiseModel.BaseNoiseModel"><span class="pre">BaseNoiseModel</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">latching_model</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#qarray.latching_models.LatchingBaseModel" title="qarray.latching_models.LatchingBaseModel.LatchingBaseModel"><span class="pre">LatchingBaseModel</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#qarray.ChargeSensedDotArray" title="Link to this definition"></a></dt>
+<dd><p>A class that represents a charge sensed dot array. The class has methods to compute the ground state of the dot array
+and the charge sensor output for both open and closed dot arrays.</p>
+<p>The class has the following attributes:</p>
+<ul class="simple">
+<li><p>Cdd: an (n_dot, n_dot) array of the capacitive coupling between dots</p></li>
+<li><p>Cgd: an (n_dot, n_gate) array of the capacitive coupling between gates and dots</p></li>
+<li><p>Cds: an (n_sensor, n_dot) array of the capacitive coupling between dots and sensors</p></li>
+<li><p>Cgs: an (n_sensor, n_gate) array of the capacitive coupling between gates and dots</p></li>
+<li><p>algorithm: the algorithm to use to compute the ground state</p></li>
+<li><p>implementation: the implementation to use to compute the ground state</p></li>
+<li><p>threshold: the threshold to use if the threshold algorithm is used</p></li>
+<li><p>max_charge_carriers: the maximum number of charge carriers to use if the brute force algorithm is used</p></li>
+<li><p>polish: a bool specifying whether to polish the result of the ground state computation by the default or thresholded algorithm</p></li>
+<li><p>coulomb_peak_width: the width of the lorentzian peaks</p></li>
+<li><p>noise_model: the noise model to use to add noise to the charge sensor output</p></li>
+</ul>
+<dl class="py method">
+<dt class="sig sig-object py" id="qarray.ChargeSensedDotArray.charge_sensor_closed">
+<span class="sig-name descname"><span class="pre">charge_sensor_closed</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">vg</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">VectorList</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">ndarray</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_charge</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">ndarray</span></span></span><a class="headerlink" href="#qarray.ChargeSensedDotArray.charge_sensor_closed" title="Link to this definition"></a></dt>
+<dd><p>Computes the charge sensor output for a closed dot array.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>vg</strong> – (…, n_gate) array of dot voltages to compute the charge sensor output for</p></li>
+<li><p><strong>n_charge</strong> – the number of charges to be confined in the dot array</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>(…, n_sensor) array of the charge sensor output</p>
+</dd>
+</dl>
+<p>Noise is added according to the noise model passed to the ChargeSensedDotArray class.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="qarray.ChargeSensedDotArray.charge_sensor_open">
+<span class="sig-name descname"><span class="pre">charge_sensor_open</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">vg</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">VectorList</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">ndarray</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">ndarray</span></span></span><a class="headerlink" href="#qarray.ChargeSensedDotArray.charge_sensor_open" title="Link to this definition"></a></dt>
+<dd><p>Computes the charge sensor output for an open dot array.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>vg</strong> – (…, n_gate) array of dot voltages to compute the charge sensor output for</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>(…, n_sensor) array of the charge sensor output</p>
+</dd>
+</dl>
+<p>Noise is added according to the noise model passed to the ChargeSensedDotArray class.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="qarray.ChargeSensedDotArray.check_threshold">
+<span class="sig-name descname"><span class="pre">check_threshold</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#qarray.ChargeSensedDotArray.check_threshold" title="Link to this definition"></a></dt>
+<dd><p>Checks if the threshold is below the optimal threshold for the system</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="qarray.ChargeSensedDotArray.compute_optimal_virtual_gate_matrix">
+<span class="sig-name descname"><span class="pre">compute_optimal_virtual_gate_matrix</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#qarray.ChargeSensedDotArray.compute_optimal_virtual_gate_matrix" title="Link to this definition"></a></dt>
+<dd><p>Computes the optimal virtual gate matrix for the dot array and sets it as the virtual gate matrix
+in the gate voltage composer.</p>
+<p>The virtual gate matrix is computed as the pseudo inverse of the dot to dot capacitance matrix times the dot to gate capacitance matrix.</p>
+<p>returns np.ndarray: the virtual gate matrix</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="qarray.ChargeSensedDotArray.compute_threshold_estimate">
+<span class="sig-name descname"><span class="pre">compute_threshold_estimate</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#qarray.ChargeSensedDotArray.compute_threshold_estimate" title="Link to this definition"></a></dt>
+<dd><p>Computes the threshold estimate for the dot array for use with the thresholded algorithm</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="qarray.ChargeSensedDotArray.do1d_closed">
+<span class="sig-name descname"><span class="pre">do1d_closed</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">gate</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">min</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">points</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_charge</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">ndarray</span></span></span><a class="headerlink" href="#qarray.ChargeSensedDotArray.do1d_closed" title="Link to this definition"></a></dt>
+<dd><p>Performs a 1D sweep of the dot array with the gate in the closed configuration</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>gate</strong> – the gate to sweep</p></li>
+<li><p><strong>min</strong> – the minimum value of the gate to sweep</p></li>
+<li><p><strong>max</strong> – the maximum value of the gate to sweep</p></li>
+<li><p><strong>points</strong> – the number of res to sweep the gate over</p></li>
+</ul>
+</dd>
+</dl>
+<p>returns the ground state of the dot array which is a np.ndarray of shape (res, n_dot) in the closed configuration</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="qarray.ChargeSensedDotArray.do1d_open">
+<span class="sig-name descname"><span class="pre">do1d_open</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">gate</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">min</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">points</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">ndarray</span></span></span><a class="headerlink" href="#qarray.ChargeSensedDotArray.do1d_open" title="Link to this definition"></a></dt>
+<dd><p>Performs a 1D sweep of the dot array with the gate in the open configuration</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>gate</strong> – the gate to sweep</p></li>
+<li><p><strong>min</strong> – the minimum value of the gate to sweep</p></li>
+<li><p><strong>max</strong> – the maximum value of the gate to sweep</p></li>
+<li><p><strong>points</strong> – the number of res to sweep the gate over</p></li>
+</ul>
+</dd>
+</dl>
+<p>returns the ground state of the dot array which is a np.ndarray of shape (res, n_dot) in the open configuration</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="qarray.ChargeSensedDotArray.do2d_closed">
+<span class="sig-name descname"><span class="pre">do2d_closed</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x_gate</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">x_min</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">x_max</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">x_points</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y_gate</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y_min</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y_max</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y_points</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_charge</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">ndarray</span></span></span><a class="headerlink" href="#qarray.ChargeSensedDotArray.do2d_closed" title="Link to this definition"></a></dt>
+<dd><p>Performs a 2D sweep of the dot array with the gates x_gate and y_gate in the open configuration</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>x_gate</strong> – the gate to sweep in the x direction</p></li>
+<li><p><strong>x_min</strong> – the minimum value of the gate to sweep</p></li>
+<li><p><strong>x_max</strong> – the maximum value of the gate to sweep</p></li>
+<li><p><strong>x_points</strong> – the number of res to sweep the gate over</p></li>
+<li><p><strong>y_gate</strong> – the gate to sweep in the y direction</p></li>
+<li><p><strong>y_min</strong> – the minimum value of the gate to sweep</p></li>
+<li><p><strong>y_max</strong> – the maximum value of the gate to sweep</p></li>
+<li><p><strong>y_points</strong> – the number of res to sweep</p></li>
+</ul>
+</dd>
+</dl>
+<p>returns the ground state of the dot array which is a np.ndarray of shape (x_res, y_res, n_dot)
+in the closed configuration</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="qarray.ChargeSensedDotArray.do2d_open">
+<span class="sig-name descname"><span class="pre">do2d_open</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x_gate</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">x_min</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">x_max</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">x_points</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y_gate</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y_min</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y_max</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y_points</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">ndarray</span></span></span><a class="headerlink" href="#qarray.ChargeSensedDotArray.do2d_open" title="Link to this definition"></a></dt>
+<dd><p>Performs a 2D sweep of the dot array with the gates x_gate and y_gate in the open configuration</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>x_gate</strong> – the gate to sweep in the x direction</p></li>
+<li><p><strong>x_min</strong> – the minimum value of the gate to sweep</p></li>
+<li><p><strong>x_max</strong> – the maximum value of the gate to sweep</p></li>
+<li><p><strong>x_points</strong> – the number of res to sweep the gate over</p></li>
+<li><p><strong>y_gate</strong> – the gate to sweep in the y direction</p></li>
+<li><p><strong>y_min</strong> – the minimum value of the gate to sweep</p></li>
+<li><p><strong>y_max</strong> – the maximum value of the gate to sweep</p></li>
+<li><p><strong>y_points</strong> – the number of res to sweep</p></li>
+</ul>
+</dd>
+</dl>
+<p>returns the ground state of the dot array which is a np.ndarray of shape (x_res, y_res, n_dot) in the open
+configuration</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="qarray.ChargeSensedDotArray.ground_state_closed">
+<span class="sig-name descname"><span class="pre">ground_state_closed</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">vg</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">VectorList</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">ndarray</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_charge</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">ndarray</span></span></span><a class="headerlink" href="#qarray.ChargeSensedDotArray.ground_state_closed" title="Link to this definition"></a></dt>
+<dd><p>Computes the ground state for a closed dot array.
+:param vg: (…, n_gate) array of dot voltages to compute the ground state for
+:param n_charge: the number of charges to be confined in the dot array
+:return: (…, n_dot) array of the number of charges to compute the ground state for</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="qarray.ChargeSensedDotArray.ground_state_open">
+<span class="sig-name descname"><span class="pre">ground_state_open</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">vg</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">VectorList</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">ndarray</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">ndarray</span></span></span><a class="headerlink" href="#qarray.ChargeSensedDotArray.ground_state_open" title="Link to this definition"></a></dt>
+<dd><p>Computes the ground state for an open dot array.
+:param vg: (…, n_gate) array of dot voltages to compute the ground state for
+:return: (…, n_dot) array of ground state charges</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="qarray.ChargeSensedDotArray.gui">
+<span class="sig-name descname"><span class="pre">gui</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">port</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">9001</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">run</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">print_compute_time</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">initial_dac_values</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#qarray.ChargeSensedDotArray.gui" title="Link to this definition"></a></dt>
+<dd><p>A function to open the GUI for the ChargeSensedDotArray class</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="qarray.ChargeSensedDotArray.optimal_Vg">
+<span class="sig-name descname"><span class="pre">optimal_Vg</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">n_charges</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">VectorList</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rcond</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0.001</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">ndarray</span></span></span><a class="headerlink" href="#qarray.ChargeSensedDotArray.optimal_Vg" title="Link to this definition"></a></dt>
+<dd><p>Computes the optimal dot voltages for a given charge configuration, of shape (n_dot + n_sensor,).
+:param n_charges: the charge configuration
+:param rcond: the rcond parameter for the least squares solver
+:return: the optimal dot voltages of shape (n_gate,)</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="qarray.DotArray">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">qarray.</span></span><span class="sig-name descname"><span class="pre">DotArray</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">Cdd</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">CddNonMaxwell</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Cgd</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">CgdNonMaxwell</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cdd</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Cdd</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cgd</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">PositiveValuedMatrix</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">NegativeValuedMatrix</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cdd_inv</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">algorithm</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'default'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">implementation</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'rust'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">threshold</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_charge_carriers</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">charge_carrier</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'hole'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">T</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">batch_size</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">10000</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">polish</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">latching_model</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#qarray.latching_models.LatchingBaseModel" title="qarray.latching_models.LatchingBaseModel.LatchingBaseModel"><span class="pre">LatchingBaseModel</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">gate_voltage_composer</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#qarray.GateVoltageComposer" title="qarray.DotArrays.GateVoltageComposer.GateVoltageComposer"><span class="pre">GateVoltageComposer</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#qarray.DotArray" title="Link to this definition"></a></dt>
+<dd><p>A class to represent a quantum dot array. The class is initialized with the following parameters:</p>
+<p>Cdd: CddNonMaxwell | None = None  # an (n_dot, n_dot) the capacitive coupling between dots
+Cgd: CgdNonMaxwell | None = None  # an (n_dot, n_gate) the capacitive coupling between gates and dots</p>
+<p>cdd: Cdd | None = None  # an (n_dot, n_dot) the capacitive coupling between dots
+cgd: PositiveValuedMatrix | NegativeValuedMatrix | None = None # an (n_dot, n_gate) the capacitive coupling between gates and dots</p>
+<p>algorithm: str | None = ‘default’  # which algorithm to use
+implementation: str | None = ‘rust’</p>
+<p>threshold: float | str = 1.  # if the threshold algorithm is used the user needs to pass the threshold
+max_charge_carriers: int | None = None  # if the brute force algorithm is used the user needs to pass the maximum number of charge carriers</p>
+<p>charge_carrier: str = ‘hole’  # a string of either ‘electron’ or ‘hole’ to specify the charge carrie
+T: float | int = 0.  # the temperature of the system for if there is thermal broadening</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="qarray.DotArray.compute_optimal_virtual_gate_matrix">
+<span class="sig-name descname"><span class="pre">compute_optimal_virtual_gate_matrix</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#qarray.DotArray.compute_optimal_virtual_gate_matrix" title="Link to this definition"></a></dt>
+<dd><p>Computes the optimal virtual gate matrix for the dot array and sets it as the virtual gate matrix
+in the gate voltage composer.</p>
+<p>The virtual gate matrix is computed as the pseudo inverse of the dot to dot capacitance matrix times the dot to gate capacitance matrix.</p>
+<p>returns np.ndarray: the virtual gate matrix</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="qarray.DotArray.compute_threshold_estimate">
+<span class="sig-name descname"><span class="pre">compute_threshold_estimate</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#qarray.DotArray.compute_threshold_estimate" title="Link to this definition"></a></dt>
+<dd><p>Computes the threshold estimate for the dot array for the thresholded algorithm</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="qarray.DotArray.do1d_closed">
+<span class="sig-name descname"><span class="pre">do1d_closed</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">gate</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">min</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">res</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_charges</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">ndarray</span></span></span><a class="headerlink" href="#qarray.DotArray.do1d_closed" title="Link to this definition"></a></dt>
+<dd><p>Performs a 1D sweep of the dot array with the gate</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>gate</strong> – the gate to sweep</p></li>
+<li><p><strong>min</strong> – the minimum value of the gate to sweep</p></li>
+<li><p><strong>max</strong> – the maximum value of the gate to sweep</p></li>
+<li><p><strong>res</strong> – the number of res to sweep the gate over</p></li>
+<li><p><strong>n_charges</strong> – the number of charges to be confined in the dot array</p></li>
+</ul>
+</dd>
+</dl>
+<p>returns the ground state of the dot array which is a np.ndarray of shape (res, n_dot)</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="qarray.DotArray.do1d_open">
+<span class="sig-name descname"><span class="pre">do1d_open</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">gate</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">min</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">res</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">ndarray</span></span></span><a class="headerlink" href="#qarray.DotArray.do1d_open" title="Link to this definition"></a></dt>
+<dd><p>Performs a 1D sweep of the dot array with the gate</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>gate</strong> – the gate to sweep</p></li>
+<li><p><strong>min</strong> – the minimum value of the gate to sweep</p></li>
+<li><p><strong>max</strong> – the maximum value of the gate to sweep</p></li>
+<li><p><strong>res</strong> – the number of res to sweep the gate over</p></li>
+</ul>
+</dd>
+</dl>
+<p>returns the ground state of the dot array which is a np.ndarray of shape (res, n_dot)</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="qarray.DotArray.do2d_closed">
+<span class="sig-name descname"><span class="pre">do2d_closed</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x_gate</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">x_min</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">x_max</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">x_res</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y_gate</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y_min</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y_max</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y_res</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_charges</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">ndarray</span></span></span><a class="headerlink" href="#qarray.DotArray.do2d_closed" title="Link to this definition"></a></dt>
+<dd><p>Performs a 2D sweep of the dot array with the gates x_gate and y_gate</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>x_gate</strong> – the gate to sweep in the x direction</p></li>
+<li><p><strong>x_min</strong> – the minimum value of the gate to sweep</p></li>
+<li><p><strong>x_max</strong> – the maximum value of the gate to sweep</p></li>
+<li><p><strong>x_res</strong> – the number of res to sweep the gate over</p></li>
+<li><p><strong>y_gate</strong> – the gate to sweep in the y direction</p></li>
+<li><p><strong>y_min</strong> – the minimum value of the gate to sweep</p></li>
+<li><p><strong>y_max</strong> – the maximum value of the gate to sweep</p></li>
+<li><p><strong>y_res</strong> – the number of res to sweep the gate over</p></li>
+<li><p><strong>n_charges</strong> – the number of charges to be confined in the dot array</p></li>
+</ul>
+</dd>
+</dl>
+<p>returns the ground state of the dot array which is a np.ndarray of shape (x_res, y_res, n_dot)</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="qarray.DotArray.do2d_open">
+<span class="sig-name descname"><span class="pre">do2d_open</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x_gate</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">x_min</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">x_max</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">x_res</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y_gate</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y_min</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y_max</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y_res</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">ndarray</span></span></span><a class="headerlink" href="#qarray.DotArray.do2d_open" title="Link to this definition"></a></dt>
+<dd><p>Performs a 2D sweep of the dot array with the gates x_gate and y_gate</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>x_gate</strong> – the gate to sweep in the x direction</p></li>
+<li><p><strong>x_min</strong> – the minimum value of the gate to sweep</p></li>
+<li><p><strong>x_max</strong> – the maximum value of the gate to sweep</p></li>
+<li><p><strong>x_res</strong> – the number of res to sweep the gate over</p></li>
+<li><p><strong>y_gate</strong> – the gate to sweep in the y direction</p></li>
+<li><p><strong>y_min</strong> – the minimum value of the gate to sweep</p></li>
+<li><p><strong>y_max</strong> – the maximum value of the gate to sweep</p></li>
+<li><p><strong>y_res</strong> – the number of res to sweep the</p></li>
+</ul>
+</dd>
+</dl>
+<p>returns the ground state of the dot array which is a np.ndarray of shape (x_res, y_res, n_dot)</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="qarray.DotArray.free_energy">
+<span class="sig-name descname"><span class="pre">free_energy</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">n</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">vg</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#qarray.DotArray.free_energy" title="Link to this definition"></a></dt>
+<dd><p>Computes the free energy of the change configurations</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="qarray.DotArray.ground_state_closed">
+<span class="sig-name descname"><span class="pre">ground_state_closed</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">vg</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">VectorList</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">ndarray</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_charges</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">ndarray</span></span></span><a class="headerlink" href="#qarray.DotArray.ground_state_closed" title="Link to this definition"></a></dt>
+<dd><p>Computes the ground state for a closed dot array.
+:param vg: (…, n_gate) array of dot voltages to compute the ground state for
+:param n_charges: the number of charges to be confined in the dot array
+:return: (…, n_dot) array of the number of charges to compute the ground state for</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="qarray.DotArray.ground_state_open">
+<span class="sig-name descname"><span class="pre">ground_state_open</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">vg</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">VectorList</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">ndarray</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">ndarray</span></span></span><a class="headerlink" href="#qarray.DotArray.ground_state_open" title="Link to this definition"></a></dt>
+<dd><p>Computes the ground state for an open dot array.
+:param vg: (…, n_gate) array of dot voltages to compute the ground state for
+:return: (…, n_dot) array of ground state charges</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="qarray.DotArray.optimal_Vg">
+<span class="sig-name descname"><span class="pre">optimal_Vg</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">n_charges</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">VectorList</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rcond</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0.001</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">ndarray</span></span></span><a class="headerlink" href="#qarray.DotArray.optimal_Vg" title="Link to this definition"></a></dt>
+<dd><p>Computes the optimal dot voltages for a given charge configuration, of shape (n_charge,).
+:param n_charges: the charge configuration
+:param rcond: the rcond parameter for the least squares solver
+:return: the optimal dot voltages of shape (n_gate,)</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="qarray.DotArray.run_gui">
+<span class="sig-name descname"><span class="pre">run_gui</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">port</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">9000</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">print_compute_time</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">initial_dac_values</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#qarray.DotArray.run_gui" title="Link to this definition"></a></dt>
+<dd><p>Creates a GUI for the dot array</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>port</strong> – the port to run the GUI on</p></li>
+<li><p><strong>print_compute_time</strong> – a bool specifying whether to print the compute time</p></li>
+<li><p><strong>initial_dac_values</strong> – the initial dac values to set the GUI to as a numpy array of length n_gate</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="qarray.DotArray.update_capacitance_matrices">
+<span class="sig-name descname"><span class="pre">update_capacitance_matrices</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">Cdd</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">CddNonMaxwell</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Cgd</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">CgdNonMaxwell</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#qarray.DotArray.update_capacitance_matrices" title="Link to this definition"></a></dt>
+<dd><p>Updates the capacitance matrices of the dot array</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>Cdd</strong> – the new Cdd matrix</p></li>
+<li><p><strong>Cgd</strong> – the new Cgd matrix</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="qarray.GateVoltageComposer">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">qarray.</span></span><span class="sig-name descname"><span class="pre">GateVoltageComposer</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">n_gate</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_dot</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_sensor</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">virtual_gate_origin</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">virtual_gate_matrix</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#qarray.GateVoltageComposer" title="Link to this definition"></a></dt>
+<dd><p>This class is used to compose dot voltages for the dot array.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="qarray.GateVoltageComposer.do1d">
+<span class="sig-name descname"><span class="pre">do1d</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">gate</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">min</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">res</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">ndarray</span></span></span><a class="headerlink" href="#qarray.GateVoltageComposer.do1d" title="Link to this definition"></a></dt>
+<dd><p>This function is used to compose a 1d dot voltage array.
+:param x_gate:
+:param x_min:
+:param x_max:
+:param x_res:
+:return:</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="qarray.GateVoltageComposer.do2d">
+<span class="sig-name descname"><span class="pre">do2d</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x_gate</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">x_min</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">x_max</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">x_res</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y_gate</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y_min</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y_max</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y_res</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">ndarray</span></span></span><a class="headerlink" href="#qarray.GateVoltageComposer.do2d" title="Link to this definition"></a></dt>
+<dd><p>This function is used to compose a 2d dot voltage array.
+:param x_gate:
+:param x_min:
+:param x_max:
+:param x_res:
+:param y_gate:
+:param y_min:
+:param y_max:
+:param y_res:
+:return:</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="qarray.GateVoltageComposer.meshgrid">
+<span class="sig-name descname"><span class="pre">meshgrid</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">gates</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">arrays</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">ndarray</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">ndarray</span></span></span><a class="headerlink" href="#qarray.GateVoltageComposer.meshgrid" title="Link to this definition"></a></dt>
+<dd><p>This function is used to compose a dot voltage array, given a list of gates and a list of arrays it will
+compose a dot voltage array, based on the meshgrid of the arrays.
+:param gates: a list of gates to be varied
+:param arrays: a list of arrays to be meshgridded
+:return: a dot voltage array</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="qarray.GateVoltageComposer.meshgrid_virtual">
+<span class="sig-name descname"><span class="pre">meshgrid_virtual</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dots</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">arrays</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">ndarray</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">ndarray</span></span></span><a class="headerlink" href="#qarray.GateVoltageComposer.meshgrid_virtual" title="Link to this definition"></a></dt>
+<dd><p>This function is used to compose a virtual gate voltage array, given a list of gates and a list of arrays it will
+compose a dot voltage array, based on the meshgrid of the arrays.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>dots</strong> – a list of dots to be varied</p></li>
+<li><p><strong>arrays</strong> – a list of arrays to be meshgridded</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>a dot voltage array</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="qarray.charge_state_changes">
+<span class="sig-prename descclassname"><span class="pre">qarray.</span></span><span class="sig-name descname"><span class="pre">charge_state_changes</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">n</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Tetrad</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">ndarray</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">ndarray</span></span></span><a class="headerlink" href="#qarray.charge_state_changes" title="Link to this definition"></a></dt>
+<dd><p>If the user passes the np.ndarray n array of shape (Nx, Ny, N_dot) which is outputted from a do2d funciton
+then this function will return a boolean array of shape (Nx-1, Ny-1, N_dot) which will be true if the
+charge state of the dot changes between in either the x or y direction.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>n</strong> – the dot occupation rank 3 tensor of shape (res_y, res_x, n_dot)</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>the boolean array of whether the charge state changes (rank 2 tensor of shape (res_y - 1, res_x - 1))</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="qarray.charge_state_dot_product">
+<span class="sig-prename descclassname"><span class="pre">qarray.</span></span><span class="sig-name descname"><span class="pre">charge_state_dot_product</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">n</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Tetrad</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">ndarray</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">values</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Vector</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">ndarray</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">VectorList</span></span></span><a class="headerlink" href="#qarray.charge_state_dot_product" title="Link to this definition"></a></dt>
+<dd><p>Function which computes the dot product between the dot change state and the
+values in “values”, thereby assigning a scalar value to each charge state.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>n</strong> – the dot occupation vector of shape (…, n_dot)</p></li>
+<li><p><strong>values</strong> – the values to assign to each charge state of shape (n_dot)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>the dot product between the dot change state and the values in “values” of shape (…)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="qarray.charge_state_to_scalar">
+<span class="sig-prename descclassname"><span class="pre">qarray.</span></span><span class="sig-name descname"><span class="pre">charge_state_to_scalar</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">n</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Tetrad</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">ndarray</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">int</span></span></span><a class="headerlink" href="#qarray.charge_state_to_scalar" title="Link to this definition"></a></dt>
+<dd><p>Function to convert the charge state to a unique index, using the binary representation.</p>
+<p>Function to convert the charge state to a random index.
+This is useful for plotting the change state. So that the
+vector of charges in converted to a random integer value.
+As such nearby charge states will have similar colors.</p>
+<p>For plotting we recommend taking, if the output of this function is z, then
+we reccomend plotting np.log2(z + 1) to get a better color map.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>n</strong> – the charge state of the dots of shape (n_dot)</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>the unique index</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="qarray.compute_optimal_virtual_gate_matrix">
+<span class="sig-prename descclassname"><span class="pre">qarray.</span></span><span class="sig-name descname"><span class="pre">compute_optimal_virtual_gate_matrix</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cdd_inv</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">CddInv</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cgd</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Cgd_holes</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rcond</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0.0001</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">ndarray</span></span></span><a class="headerlink" href="#qarray.compute_optimal_virtual_gate_matrix" title="Link to this definition"></a></dt>
+<dd><p>Function to compute the optimal virtual gate matrix.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>cdd_inv</strong> – the inverse of the dot to dot capacitance matrix</p></li>
+<li><p><strong>cgd</strong> – the dot to gate capacitance matrix</p></li>
+<li><p><strong>rcond</strong> – the rcond parameter for the pseudo inverse</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>the optimal virtual gate matrix</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="qarray.dot_occupation_changes">
+<span class="sig-prename descclassname"><span class="pre">qarray.</span></span><span class="sig-name descname"><span class="pre">dot_occupation_changes</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">n</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Tetrad</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">ndarray</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">ndarray</span></span></span><a class="headerlink" href="#qarray.dot_occupation_changes" title="Link to this definition"></a></dt>
+<dd><p>If the user passes the np.ndarray n array of shape (Nx, Ny, N_dot) which is outputted from a do2d funciton
+then this function will return a boolean array of shape (Nx-1, Ny-1, N_dot) which will be true if the
+charge state of the dot changes between in either the x or y direction.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>n</strong> – the dot occupation rank 3 tensor of shape (res_y, res_x, n_dot)</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>the boolean array of whether the charge state changes (rank 2 tensor of shape (res_y - 1, res_x - 1))</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py class" id="module-qarray.noise_models">
+<dt class="sig sig-object py" id="qarray.noise_models.BaseNoiseModel">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">qarray.noise_models.</span></span><span class="sig-name descname"><span class="pre">BaseNoiseModel</span></span><a class="headerlink" href="#qarray.noise_models.BaseNoiseModel" title="Link to this definition"></a></dt>
+<dd><p>The base noise model class that all noise models should inherit from. This class defines the interface that all
+noise models should implement.</p>
+<p>The interface consists of two methods:</p>
+<blockquote>
+<div><p>sample_input_noise: This method should return the input noise for the charge sensor model. This noise perturbs the</p>
+</div></blockquote>
+<p>potential of the dots in the charge sensor, before those potentials are used in the Lorenzian function to calculate
+the charge sensor output.</p>
+<p>sample_output_noise: This method should return the output noise for the charge sensor model. This noise perturbs the
+output of the charge sensor model, after the Lorenzian function has been applied to the potentials of the dots in
+the charge sensor.</p>
+<p>The BaseNoiseModel class also overloads the addition operator to allow for the addition of noise models. This allows
+you to add noise models together to create composite noise models.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="qarray.noise_models.BaseNoiseModel.sample_input_noise">
+<span class="sig-name descname"><span class="pre">sample_input_noise</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">shape</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#qarray.noise_models.BaseNoiseModel.sample_input_noise" title="Link to this definition"></a></dt>
+<dd><p>Sample input noise from the noise model. This noise perturbs the potential of the dots in the charge sensor,
+before those potentials are used in the Lorenzian function to calculate the charge sensor output.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="qarray.noise_models.BaseNoiseModel.sample_output_noise">
+<span class="sig-name descname"><span class="pre">sample_output_noise</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">shape</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#qarray.noise_models.BaseNoiseModel.sample_output_noise" title="Link to this definition"></a></dt>
+<dd><p>Sample output noise from the noise model. This noise perturbs the output of the charge sensor model, after the
+Lorenzian function has been applied to the potentials of the dots in the charge sensor.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="qarray.noise_models.NoNoise">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">qarray.noise_models.</span></span><span class="sig-name descname"><span class="pre">NoNoise</span></span><a class="headerlink" href="#qarray.noise_models.NoNoise" title="Link to this definition"></a></dt>
+<dd><p>A noise model which adds no noise to the charge sensor output.</p>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="qarray.noise_models.TelegraphNoise">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">qarray.noise_models.</span></span><span class="sig-name descname"><span class="pre">TelegraphNoise</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">amplitude</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">p01</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">p10</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#qarray.noise_models.TelegraphNoise" title="Link to this definition"></a></dt>
+<dd><p>A telegraph noise model that can be added to a charge sensing model to simulate the effect of telegraph noise.</p>
+<p>The noise model is a simple model that can be used to simulate the effect of telegraph noise on a charge sensing
+model. The model is based on a simple telegraph noise model where the noise can switch between two states with
+different probabilities. The model has three parameters:</p>
+<ul class="simple">
+<li><p>amplitude: The amplitude of the noise. As the noise perturbs the potential of the dots in the charge sensor, this is in volts.</p></li>
+<li><p>p01: The probability that the noise switches from 0 to 1 per pixel</p></li>
+<li><p>p10: The probability that the noise switches from 1 to 0 per pixel</p></li>
+</ul>
+<dl class="py method">
+<dt class="sig sig-object py" id="qarray.noise_models.TelegraphNoise.sample_input_noise">
+<span class="sig-name descname"><span class="pre">sample_input_noise</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">shape</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#qarray.noise_models.TelegraphNoise.sample_input_noise" title="Link to this definition"></a></dt>
+<dd><p>Sample input noise from the telegraph noise model. This noise perturbs the potential of the dots in the charge sensor,
+before those potentials are used in the Lorentzian function to calculate the charge sensor output.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="qarray.noise_models.WhiteNoise">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">qarray.noise_models.</span></span><span class="sig-name descname"><span class="pre">WhiteNoise</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">amplitude</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#qarray.noise_models.WhiteNoise" title="Link to this definition"></a></dt>
+<dd><p>A white noise model that can be added to a charge sensing model to simulate the effect of white noise.
+- amplitude: The amplitude of the noise. As the noise perturbs the charge sensor output, this is in volts.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="qarray.noise_models.WhiteNoise.sample_output_noise">
+<span class="sig-name descname"><span class="pre">sample_output_noise</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">shape</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#qarray.noise_models.WhiteNoise.sample_output_noise" title="Link to this definition"></a></dt>
+<dd><p>Sample output noise from the white noise model. This noise perturbs the charge sensor output.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class" id="module-qarray.latching_models">
+<dt class="sig sig-object py" id="qarray.latching_models.LatchingBaseModel">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">qarray.latching_models.</span></span><span class="sig-name descname"><span class="pre">LatchingBaseModel</span></span><a class="headerlink" href="#qarray.latching_models.LatchingBaseModel" title="Link to this definition"></a></dt>
+<dd><p>The base latching model class that all latching models should inherit from. This class defines the interface that all
+latching models should implement.</p>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="qarray.latching_models.LatchingModel">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">qarray.latching_models.</span></span><span class="sig-name descname"><span class="pre">LatchingModel</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">n_dots</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">p_leads</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">ndarray</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">p_inter</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">ndarray</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#qarray.latching_models.LatchingModel" title="Link to this definition"></a></dt>
+<dd><p>A latching model that adds latching to the dot occupation vector. This model adds latching to the dot occupation vector
+by changing the dot occupation vector at each time step with a probability p_leads for the leads and a probability p_inter
+for the inter-dot couplings.</p>
+<p>The dot occupation vector is latched by comparing the dot occupation vector at the current time step with the dot occupation
+vector at the previous time step. If the dot occupation vector at the current time step differs from the dot occupation vector
+at the previous time step, the dot occupation vector at the current time step is changed with a probability p_leads for the
+leads and a probability p_inter for the inter-dot couplings. The dot occupation vector at the current time step is then
+compared with the dot occupation vector at the previous time step again, and the process is repeated until the dot occupation
+vector at the current time step is the same as the dot occupation vector at the previous time step.</p>
+<p>Parameters:
+- n_dots (int): The number of dots in the dot occupation vector.
+- p_leads (float | np.ndarray): The probability of latching for the leads. If a float, the same probability is used for all
+leads. If an np.ndarray, the probability of latching for each lead is specified.
+- p_inter (float | np.ndarray): The probability of latching for the inter-dot couplings. If a float, the same probability is
+used for all inter-dot couplings. If an np.ndarray, the probability of latching for each inter-dot coupling is specified.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="qarray.latching_models.LatchingModel.add_latching">
+<span class="sig-name descname"><span class="pre">add_latching</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">n</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">VectorList</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">measurement_shape</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">VectorList</span></span></span><a class="headerlink" href="#qarray.latching_models.LatchingModel.add_latching" title="Link to this definition"></a></dt>
+<dd><p>Add latching to the dot occupation vector.</p>
+<p>Parameters:
+- n (np.ndarray): The dot occupation vector of shape (…, n_dots).
+- measurement_shape (Tuple[int]): The shape of the measurement.</p>
+<p>Returns:
+- n_latched (np.ndarray): The latched dot occupation vector of shape (…, n_dots).</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="qarray.latching_models.PSBLatchingModel">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">qarray.latching_models.</span></span><span class="sig-name descname"><span class="pre">PSBLatchingModel</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">n_dots</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">p_psb</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">ndarray</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#qarray.latching_models.PSBLatchingModel" title="Link to this definition"></a></dt>
+<dd><p>A latching model that adds latching to the dot occupation vector. This model adds latching to the dot occupation vector
+by changing the dot occupation vector at each time step with a probability p_leads for the leads and a probability p_inter
+for the inter-dot couplings.</p>
+<p>The dot occupation vector is latched by comparing the dot occupation vector at the current time step with the dot occupation
+vector at the previous time step. If the dot occupation vector at the current time step differs from the dot occupation vector
+at the previous time step, the dot occupation vector at the current time step is changed with a probability p_leads for the
+leads and a probability p_inter for the inter-dot couplings. The dot occupation vector at the current time step is then
+compared with the dot occupation vector at the previous time step again, and the process is repeated until the dot occupation
+vector at the current time step is the same as the dot occupation vector at the previous time step.</p>
+<p>Parameters:</p>
+<ul class="simple">
+<li><p>n_dots (int): The number of dots in the dot occupation vector.</p></li>
+<li><p>p_psb (float | np.ndarray): The probability of latching for the inter-dot couplings. If a float, the same probability is used for all inter-dot couplings. If an np.ndarray, the probability of latching for each inter-dot coupling is specified.</p></li>
+</ul>
+<dl class="py method">
+<dt class="sig sig-object py" id="qarray.latching_models.PSBLatchingModel.add_latching">
+<span class="sig-name descname"><span class="pre">add_latching</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">n</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">VectorList</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">measurement_shape</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">VectorList</span></span></span><a class="headerlink" href="#qarray.latching_models.PSBLatchingModel.add_latching" title="Link to this definition"></a></dt>
+<dd><p>Add latching to the dot occupation vector.</p>
+<p>Parameters:</p>
+<ul class="simple">
+<li><p>n (np.ndarray): The dot occupation vector of shape (…, n_dots).</p></li>
+<li><p>measurement_shape (tuple): The shape of the measurement.</p></li>
+</ul>
+<p>Returns:</p>
+<ul class="simple">
+<li><p>n_latched (np.ndarray): The latched dot occupation vector of shape (…, n_dots).</p></li>
+</ul>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="advanced_functionality.html" class="btn btn-neutral float-left" title="Advanced functionality" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="authors.html" class="btn btn-neutral float-right" title="Authors" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright .</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
