@@ -1,14 +1,7 @@
-"""
-GUI for the DotArray model.
-
-This module provides a GUI for the DotArray model. The GUI allows the user to interactively change the capacitance
-matrices and the gate voltages. The GUI also allows the user to plot the charge stability diagram and the charge state
-for different gate voltages.
-
-%TODO deal with the cases where there are more or less gates than dots
-"""
-
 from time import perf_counter
+import io
+import zipfile
+import base64
 
 import dash
 import numpy as np
@@ -17,7 +10,8 @@ import plotly.express as px
 import plotly.graph_objects as go
 from dash import dash_table
 from dash import dcc, html
-from dash.dependencies import Input, Output
+from dash.dependencies import Input, Output, State
+from dash.exceptions import PreventUpdate
 
 from qarray import charge_state_to_scalar, charge_state_changes
 from .helper_functions import create_gate_options, n_charges_options, unique_last_axis, plot_options
@@ -29,11 +23,12 @@ def run_gui(model, port=9000, run=True, print_compute_time=True, initial_dac_val
 
     Parameters
     ----------
-
     model : DotArray
     port : int
     run : bool
     print_compute_time : bool
+    initial_dac_values : None or array-like
+        Optional initial gate values.
     """
 
     app = dash.Dash(__name__)
@@ -51,13 +46,17 @@ def run_gui(model, port=9000, run=True, print_compute_time=True, initial_dac_val
     Cdd[''] = [f'D{i + 1}' for i in range(n_dot)]
     Cgd[''] = [f'D{i + 1}' for i in range(n_dot)]
 
-    # making the '' column the first column
+    # Make the '' column the first column
     Cdd = Cdd[[''] + [col for col in Cdd.columns if col != '']]
     Cgd = Cgd[[''] + [col for col in Cgd.columns if col != '']]
 
     virtual_gate_matrix = model.compute_optimal_virtual_gate_matrix()
     virtual_gate_matrix = np.round(virtual_gate_matrix, 3)
-    virtual_gate_matrix = pd.DataFrame(virtual_gate_matrix, dtype=float, columns=[f'vP{i + 1}' for i in range(n_dot)])
+    virtual_gate_matrix = pd.DataFrame(
+        virtual_gate_matrix,
+        dtype=float,
+        columns=[f'vP{i + 1}' for i in range(n_dot)]
+    )
 
     if initial_dac_values is None:
         initial_dac_values = np.zeros(n_gate)
@@ -177,7 +176,7 @@ def run_gui(model, port=9000, run=True, print_compute_time=True, initial_dac_val
 
         ], style={'display': 'flex', 'justify-content': 'space-between', 'margin-bottom': '20px'}),
 
-        # Third Row: Plot Options and Heatmap
+        # Third Row: Plot + Options + Save Data
         html.Div([
 
             html.Div([
@@ -185,7 +184,7 @@ def run_gui(model, port=9000, run=True, print_compute_time=True, initial_dac_val
                     id='heatmap',
                     style={'width': '100%', 'margin-left': 'auto', 'margin-right': 'auto'}
                 )
-            ], style={'width': '78%', 'text-align': 'center'}),
+            ], style={'width': '70%', 'text-align': 'center'}),
 
             html.Div([
                 html.H4("Open/Closed options"),
@@ -222,8 +221,23 @@ def run_gui(model, port=9000, run=True, print_compute_time=True, initial_dac_val
                         {'label': 'False', 'value': 'False'}
                     ],
                     value='True'
-                )
-            ], style={'width': '20%', 'margin-right': '2%'}),
+                ),
+
+                html.Hr(),
+
+                # --- SAVE DATA BUTTON & DOWNLOAD COMPONENT ---
+                html.Button("Save Data", id="save-data", n_clicks=0, style={
+                    "fontSize": "20px",  # Increase font size
+                    "padding": "15px 30px",  # Increase padding for a larger button
+                    "backgroundColor": "grey",
+                    "color": "black",
+                    "border": "none",
+                    "borderRadius": "5px",
+                    "cursor": "pointer",
+                }),
+                dcc.Download(id="download-data"),
+
+            ], style={'width': '28%', 'margin-right': '2%', 'text-align': 'left'}),
 
         ], style={'display': 'flex', 'justify-content': 'space-between', 'margin-top': '20px'})
     ])
@@ -246,14 +260,21 @@ def run_gui(model, port=9000, run=True, print_compute_time=True, initial_dac_val
          Input('print_charge_state', 'value'),
          *[Input(f'dac_{i}', 'value') for i in range(model.n_gate)]]
     )
-    def update(Cdd, Cgd, virtual_gate_matrix, x_gate, x_amplitude, x_resolution, y_gate, y_amplitude, y_resolution,
-               n_charges, plot_options, automatically_update_virtual_gate_matrix, print_charge_state, *dac_values):
+    def update(
+            Cdd_data, Cgd_data, virtual_gate_matrix_data,
+            x_gate, x_amplitude, x_resolution,
+            y_gate, y_amplitude, y_resolution,
+            n_charges, plot_choice,
+            auto_vg, print_charge_state,
+            *dac_values
+    ):
         """
-        Update the heatmap based on the input values.
+        Update the heatmap based on the input values and return the
+        updated virtual gate matrix as well.
         """
 
         if model.T != 0:
-            print('Warning the GUI plotting currently only works for T=0. The temperature is set to 0.')
+            print('Warning the GUI plotting currently only works for T=0. Forcing T=0.')
             model.T = 0
 
         dac_values = np.array(dac_values)
@@ -261,40 +282,49 @@ def run_gui(model, port=9000, run=True, print_compute_time=True, initial_dac_val
         if x_gate == y_gate:
             raise ValueError('x_gate and y_gate must be different')
 
+        # Convert table data back to matrices
         try:
-            # Convert table data back to matrices
-            Cdd = pd.DataFrame(Cdd).drop(columns=['']).set_index('index').astype(float)
-            Cgd = pd.DataFrame(Cgd).drop(columns=['']).set_index('index').astype(float)
+            Cdd_df = pd.DataFrame(Cdd_data).drop(columns=['']).set_index('index').astype(float)
+            Cgd_df = pd.DataFrame(Cgd_data).drop(columns=['']).set_index('index').astype(float)
         except ValueError:
-            print('Error the capacitance matrices cannot be converted to float. \n')
-            return go.Figure()
+            print('Error: the capacitance matrices cannot be converted to float.')
+            return go.Figure(), virtual_gate_matrix_data
 
-        cdd_matrix = Cdd.to_numpy()
+        cdd_matrix = Cdd_df.to_numpy()
 
-        if not np.allclose(cdd_matrix, cdd_matrix.T):
-            # removing nan values
+        if not np.allclose(cdd_matrix, cdd_matrix.T, equal_nan=True):
+            # Replacing NaN with 0, then symmetrize
             cdd_matrix = np.where(np.isnan(cdd_matrix), 0, cdd_matrix)
-
             print('Warning: Cdd matrix is not symmetric. Taking the average of the upper and lower triangle.')
             cdd_matrix = (cdd_matrix + cdd_matrix.T) / 2
 
-        model.update_capacitance_matrices(Cdd=cdd_matrix, Cgd=Cgd.to_numpy())
+        cgd_matrix = Cgd_df.to_numpy()
 
-        if automatically_update_virtual_gate_matrix == 'True':
-            virtual_gate_matrix = model.compute_optimal_virtual_gate_matrix()
-            virtual_gate_matrix = np.round(virtual_gate_matrix, 3)
-            virtual_gate_matrix = pd.DataFrame(virtual_gate_matrix, dtype=float,
-                                               columns=[f'vP{i + 1}' for i in range(n_dot)])
+        model.update_capacitance_matrices(Cdd=cdd_matrix, Cgd=cgd_matrix)
+
+        # Update the virtual gate matrix automatically if requested
+        if auto_vg == 'True':
+            updated_vgm = model.compute_optimal_virtual_gate_matrix()
+            updated_vgm = np.round(updated_vgm, 3)
+            virtual_gate_matrix = pd.DataFrame(
+                updated_vgm,
+                columns=[f'vP{i + 1}' for i in range(n_dot)]
+            )
         else:
-            virtual_gate_matrix = pd.DataFrame(virtual_gate_matrix)
+            # Use the user-edited matrix as is
+            virtual_gate_matrix = pd.DataFrame(virtual_gate_matrix_data)
+            # Just in case the user changed dimensions
+            virtual_gate_matrix = virtual_gate_matrix.iloc[:, :n_dot]
 
-        model.gate_voltage_composer.virtual_gate_matrix = virtual_gate_matrix.to_numpy()[:, :n_dot]
+        model.gate_voltage_composer.virtual_gate_matrix = virtual_gate_matrix.to_numpy()
 
+        # Sweep
         vg = model.gate_voltage_composer.do2d(
             x_gate, -x_amplitude / 2, x_amplitude / 2, x_resolution,
             y_gate, -y_amplitude / 2, y_amplitude / 2, y_resolution
         ) + dac_values[np.newaxis, np.newaxis, :]
 
+        # Compute charge states
         t0 = perf_counter()
         if n_charges == 'any':
             n = model.ground_state_open(vg)
@@ -302,24 +332,27 @@ def run_gui(model, port=9000, run=True, print_compute_time=True, initial_dac_val
             n = model.ground_state_closed(vg, n_charges=n_charges)
         t1 = perf_counter()
         if print_compute_time:
-            print(f'Time taken to compute the charge state: {t1 - t0:.3f}s')
+            print(f'Time to compute charge states: {t1 - t0:.3f} s')
 
-        if plot_options in px.colors.named_colorscales():
+        # Build 'z' for the heatmap
+        if plot_choice in px.colors.named_colorscales():
             z = charge_state_to_scalar(n).astype(float)
-            z = np.log2(z + 1)
-            cmap = plot_options
-        elif plot_options == 'changes':
+            z = np.log2(z + 1)  # optional for better contrast
+            cmap = plot_choice
+        elif plot_choice == 'changes':
             z = charge_state_changes(n).astype(float)
             cmap = 'greys'
         else:
             raise ValueError(
-                f'Plot {plot_options} is not recognized the options are "changes" or a colour map in {px.colors.named_colorscales()}')
+                f'Unrecognized plot choice "{plot_choice}". '
+                f'Either use "changes" or one of {px.colors.named_colorscales()}.'
+            )
 
         # Create the heatmap
         fig = go.Figure(data=go.Heatmap(
             z=z,
             colorscale=cmap,
-            showscale=False,  # This removes the colorbar
+            showscale=False,  # remove the colorbar
         ))
 
         x_text = np.linspace(-x_amplitude / 2, x_amplitude / 2, 11).round(3)
@@ -328,40 +361,31 @@ def run_gui(model, port=9000, run=True, print_compute_time=True, initial_dac_val
         y_text = np.linspace(-y_amplitude / 2, y_amplitude / 2, 11).round(3)
         y_tickvals = np.linspace(0, y_resolution, 11)
 
-        # adding the x and y axis numbers
         fig.update_xaxes(title_text=x_gate, ticktext=x_text, tickvals=x_tickvals)
         fig.update_yaxes(title_text=y_gate, ticktext=y_text, tickvals=y_tickvals)
 
-        charge_states = unique_last_axis(n)
+        charge_states = unique_last_axis(n).astype(int)
 
-        if print_charge_state == 'False':
-            return fig, virtual_gate_matrix.to_dict('records')
-
-        if charge_states.shape[0] > 100:
-            print(f'Attempting to label {charge_states.shape[0]} charge states. This is too many.')
-            return fig, virtual_gate_matrix.to_dict('records')
-
-        # the code below only runs if the number of charge states is less than 100
-        for charge_state in charge_states:
-            ix, iy = np.where(np.all(n == charge_state, axis=-1))
-            charge_state = charge_state.squeeze()
-
-            charge_state = charge_state.astype(int)
-
-            # adding the annotation to the heatmap
-            fig.add_annotation(
-                x=iy.mean(),
-                y=ix.mean(),
-                text=f'{charge_state}',
-                showarrow=False,
-                font=dict(
-                    color='black',
-                    size=11
-                )
-            )
+        # Optionally annotate the figure with the distinct charge states
+        if print_charge_state == 'True':
+            if charge_states.shape[0] <= 100:
+                for charge_state in charge_states:
+                    ix, iy = np.where(np.all(n == charge_state, axis=-1))
+                    avg_x = iy.mean()
+                    avg_y = ix.mean()
+                    label = ','.join(map(str, charge_state))
+                    fig.add_annotation(
+                        x=avg_x,
+                        y=avg_y,
+                        text=label,
+                        showarrow=False,
+                        font=dict(color='black', size=11)
+                    )
+            else:
+                print(f'Skipping charge-state annotation (>100 distinct states).')
 
         fig.update_layout(
-            title=f'Charge stability diagram',
+            title='Charge stability diagram',
             xaxis_nticks=4,
             yaxis_nticks=4,
             autosize=False,
@@ -369,7 +393,91 @@ def run_gui(model, port=9000, run=True, print_compute_time=True, initial_dac_val
             height=600,
         )
 
-        return fig, virtual_gate_matrix.to_dict('records')
+        # Return figure + updated Virtual Gate Matrix
+        return fig, virtual_gate_matrix.round(3).to_dict('records')
+
+    # ------------------------------------------------------------------
+    #  Callback to save data on button click
+    # ------------------------------------------------------------------
+    @app.callback(
+        Output("download-data", "data"),
+        Input("save-data", "n_clicks"),
+        State("heatmap", "figure"),
+        State('dropdown-menu-x', 'value'),
+        State('input-scalar-x1', 'value'),
+        State('input-scalar-x2', 'value'),
+        State('dropdown-menu-y', 'value'),
+        State('input-scalar1', 'value'),
+        State('input-scalar2', 'value'),
+        [State(f'dac_{i}', 'value') for i in range(model.n_gate)],
+        prevent_initial_call=True
+    )
+    def save_data(n_clicks, heatmap_fig,
+                  x_gate, x_amplitude, x_resolution,
+                  y_gate, y_amplitude, y_resolution,
+                  *dac_values):
+        """
+        Save the z data from the heatmap, as well as the Cdd and Cgd matrices,
+        into a single ZIP file containing:
+          - z_data.npy
+          - Cdd.npy
+          - Cgd.npy
+          - vg.npy
+          - virtual_gate_matrix.npy
+        """
+
+        print(f"Save Data Button Clicked: {n_clicks}")  # Debugging
+
+        if n_clicks is None or n_clicks < 1:
+            raise PreventUpdate
+
+        dac_values = np.array(dac_values)
+
+        # Sweep
+        vg = model.gate_voltage_composer.do2d(
+            x_gate, -x_amplitude / 2, x_amplitude / 2, x_resolution,
+            y_gate, -y_amplitude / 2, y_amplitude / 2, y_resolution
+        ) + dac_values[np.newaxis, np.newaxis, :]
+
+        # Extract z data from the heatmap figure
+        z = np.array(heatmap_fig["data"][0]["z"])
+
+        # Prepare ZIP file in-memory
+        buffer = io.BytesIO()
+        with zipfile.ZipFile(buffer, mode="w") as zf:
+            # z_data.npy
+            z_data_bytes = io.BytesIO()
+            np.save(z_data_bytes, z)
+            zf.writestr("z_data.npy", z_data_bytes.getvalue())
+
+            # Cdd.npy
+            cdd_bytes = io.BytesIO()
+            np.save(cdd_bytes, model.cdd)
+            zf.writestr("Cdd.npy", cdd_bytes.getvalue())
+
+            # Cgd.npy
+            cgd_bytes = io.BytesIO()
+            np.save(cgd_bytes, model.cgd)
+            zf.writestr("Cgd.npy", cgd_bytes.getvalue())
+
+            # vg.npy
+            vg_bytes = io.BytesIO()
+            np.save(vg_bytes, vg)
+            zf.writestr("vg.npy", vg_bytes.getvalue())
+
+            # virtual_gate_matrix.npy
+            virtual_gate_matrix_bytes = io.BytesIO()
+            np.save(virtual_gate_matrix_bytes, model.gate_voltage_composer.virtual_gate_matrix)
+            zf.writestr("virtual_gate_matrix.npy", virtual_gate_matrix_bytes.getvalue())
+
+        # Encode and return the ZIP file
+        zip_bytes = buffer.getvalue()
+        b64_zip = base64.b64encode(zip_bytes).decode("utf-8")
+        return dict(
+            content=b64_zip,
+            filename="dotarray_data.zip",
+            base64=True,
+        )
 
     # Run the server
     if run:
