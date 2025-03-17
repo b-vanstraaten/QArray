@@ -8,7 +8,7 @@ import matplotlib
 import matplotlib.pyplot as plt
 import numpy as np
 
-from qarray import (DotArray, GateVoltageComposer)
+from qarray import (DotArray, GateVoltageComposer, charge_state_changes)
 
 # setting up the constant capacitance model for a triple dot
 
@@ -33,7 +33,11 @@ model = DotArray(
     T=0.0
 )
 
-print(np.linalg.cond(model.cdd_inv))
+model.gate_voltage_composer.virtual_gate_matrix = np.array([
+    [1, 0, 0],
+    [-0.2, 1, 0],
+    [0, 0, 1],
+])
 
 # creating the dot voltage composer, which helps us to create the dot voltage array
 # for sweeping in 1d and 2d
@@ -52,7 +56,7 @@ ground_state_funcs = [
 vx_min, vx_max = -10, 10
 vy_min, vy_max = -10, 10
 # using the dot voltage composer to create the dot voltage array for the 2d sweep
-vg = model.gate_voltage_composer.do2d('P1', vy_min, vx_max, 400, 'P3', vy_min, vy_max, 400)
+vg = model.gate_voltage_composer.do2d('vP1', vy_min, vx_max, 400, 'vP3', vy_min, vy_max, 400)
 
 # creating the figure and axes
 fig, axes = plt.subplots(2, 2, sharex=True, sharey=True)
