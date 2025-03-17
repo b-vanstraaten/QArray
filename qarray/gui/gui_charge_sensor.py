@@ -23,7 +23,7 @@ from qarray import ChargeSensedDotArray, charge_state_to_scalar, charge_state_ch
 from .helper_functions import create_gate_options, n_charges_options, unique_last_axis, plot_options
 
 
-def run_gui_charge_sensor(model, port=9000, run=True, print_compute_time=True, initial_dac_values=None):
+def run_gui_charge_sensor(model, port=9000, run=True, print_compute_time=True, initial_dac_values=None, initial_virtual_gate_matrix=None):
     """
     Create the GUI for the DotArray model.
 
@@ -56,7 +56,10 @@ def run_gui_charge_sensor(model, port=9000, run=True, print_compute_time=True, i
     Cdd = Cdd[[''] + [col for col in Cdd.columns if col != '']]
     Cgd = Cgd[[''] + [col for col in Cgd.columns if col != '']]
 
-    virtual_gate_matrix = np.eye(n_dot + n_sensor)
+    if initial_dac_values is not None:
+        virtual_gate_matrix = np.round(initial_virtual_gate_matrix, 3)
+    else:
+        virtual_gate_matrix = np.eye(n_dot + n_sensor)
     virtual_gate_matrix = pd.DataFrame(virtual_gate_matrix, dtype=float,
                                        columns=[f'vP{i + 1}' for i in range(n_dot + n_sensor)])
 
@@ -209,7 +212,9 @@ def run_gui_charge_sensor(model, port=9000, run=True, print_compute_time=True, i
                     placeholder='Auto-update virtual gate matrix',
                     options=[
                         {'label': 'True', 'value': 'True'},
-                        {'label': 'False', 'value': 'False'}
+                        {'label': 'False', 'value': 'False'},
+                        {'label': 'Just the sensor', 'value': 'Just the sensor'}
+
                     ],
                     value='False'
                 ),
@@ -293,18 +298,26 @@ def run_gui_charge_sensor(model, port=9000, run=True, print_compute_time=True, i
 
         model.update_capacitance_matrices(Cdd=cdd_matrix, Cgd=Cgd.to_numpy(), Cgs=model.Cgs, Cds=model.Cds)
 
-        if automatically_update_virtual_gate_matrix == 'True':
-            virtual_gate_matrix = model.compute_optimal_virtual_gate_matrix()
-            virtual_gate_matrix_numpy = np.round(virtual_gate_matrix, 3)
-            virtual_gate_matrix = pd.DataFrame(virtual_gate_matrix_numpy, dtype=float,
-                                               columns=[f'vP{i + 1}' for i in range(n_dot + n_sensor)])
-        else:
-            virtual_gate_matrix = pd.DataFrame(virtual_gate_matrix)
-            # the to_numpy()[:, 1:n_dot + n_sensor + 1] is to remove the index column
-            if virtual_gate_matrix.shape[1] != n_dot + n_sensor:
-                virtual_gate_matrix_numpy = virtual_gate_matrix.to_numpy()[:, 1:n_dot + n_sensor + 1]
-            else:
-                virtual_gate_matrix_numpy = virtual_gate_matrix.to_numpy()
+        match automatically_update_virtual_gate_matrix:
+            case 'True':
+                virtual_gate_matrix = model.compute_optimal_virtual_gate_matrix()
+                virtual_gate_matrix_numpy = np.round(virtual_gate_matrix, 3)
+                virtual_gate_matrix = pd.DataFrame(virtual_gate_matrix_numpy, dtype=float,
+                                                   columns=[f'vP{i + 1}' for i in range(n_dot + n_sensor)])
+            case 'Just the sensor':
+                virtual_gate_matrix = model.compute_optimal_sensor_virtual_gate_matrix()
+                virtual_gate_matrix_numpy = np.round(virtual_gate_matrix, 3)
+                virtual_gate_matrix = pd.DataFrame(virtual_gate_matrix_numpy, dtype=float,
+                                                   columns=[f'vP{i + 1}' for i in range(n_dot + n_sensor)])
+
+            case 'False':
+                virtual_gate_matrix = pd.DataFrame(virtual_gate_matrix)
+                # the to_numpy()[:, 1:n_dot + n_sensor + 1] is to remove the index column
+                if virtual_gate_matrix.shape[1] != n_dot + n_sensor:
+                    virtual_gate_matrix_numpy = virtual_gate_matrix.to_numpy()[:, 1:n_dot + n_sensor + 1]
+                else:
+                    virtual_gate_matrix_numpy = virtual_gate_matrix.to_numpy()
+
         model.gate_voltage_composer.virtual_gate_matrix = virtual_gate_matrix_numpy
 
         vg = model.gate_voltage_composer.do2d(

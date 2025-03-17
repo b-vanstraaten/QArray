@@ -138,13 +138,13 @@ class ChargeSensedDotArray:
         vg = self.gate_voltage_composer.do1d(gate, min, max, points)
         return self.charge_sensor_open(vg)
 
-    def gui(self, port=9001, run=True, print_compute_time=True, initial_dac_values=None):
+    def gui(self, port=9001, run=True, print_compute_time=True, initial_dac_values=None, initial_virtual_gate_matrix=None):
         """
         A function to open the GUI for the ChargeSensedDotArray class
         """
         from ..gui.gui_charge_sensor import run_gui_charge_sensor
 
-        run_gui_charge_sensor(self, port = port, run = run, print_compute_time = print_compute_time, initial_dac_values = initial_dac_values)
+        run_gui_charge_sensor(self, port = port, run = run, print_compute_time = print_compute_time, initial_dac_values = initial_dac_values, initial_virtual_gate_matrix = initial_virtual_gate_matrix)
 
     def compute_optimal_virtual_gate_matrix(self):
         """
@@ -162,6 +162,22 @@ class ChargeSensedDotArray:
             virtual_gate_matrix = -virtual_gate_matrix
 
         return virtual_gate_matrix
+
+    def compute_optimal_sensor_virtual_gate_matrix(self):
+        assert self.n_sensor == 1, 'currently not implemented for more than one sensor'
+        virtual_gate_matrix = compute_optimal_virtual_gate_matrix(self.cdd_inv_full, self.cgd_full)
+
+        device_virtual_gates = virtual_gate_matrix[:-1, :-1]
+        sensor_gates = virtual_gate_matrix[-1, :-1]
+
+        inv = np.linalg.inv(device_virtual_gates)
+        sensor_virtual_matrix = np.eye(self.n_gate)
+        sensor_virtual_matrix[-1, :-1] = inv @ sensor_gates
+
+        self.gate_voltage_composer.virtual_gate_matrix = sensor_virtual_matrix
+        return sensor_virtual_matrix
+
+
 
     def do1d_closed(self, gate: int | str, min: float, max: float, points: int, n_charge: int) -> np.ndarray:
         """
