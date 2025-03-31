@@ -1,7 +1,7 @@
 import matplotlib.pyplot as plt
 import numpy as np
 
-from qarray import ChargeSensedDotArray
+from qarray import ChargeSensedDotArray, charge_state_changes, dot_occupation_changes
 from qarray.noise_models import WhiteNoise, TelegraphNoise, NoNoise
 from time import perf_counter
 
@@ -19,13 +19,16 @@ model = ChargeSensedDotArray(
 )
 
 
-print(model.gate_voltage_composer.virtual_gate_matrix)
+virtual_gate_matrix = model.gate_voltage_composer.virtual_gate_matrix
 
+pert = np.random.uniform(0, 0.0, size=virtual_gate_matrix.shape) + 1.
+
+model.gate_voltage_composer.virtual_gate_matrix = virtual_gate_matrix * pert
 
 
 # defining the min and max values for the dot voltage sweep
-vx_min, vx_max = -2, 2
-vy_min, vy_max = -2, 2
+vx_min, vx_max = -1, 1
+vy_min, vy_max = -1, 1
 # using the dot voltage composer to create the dot voltage array for the 2d sweep
 vg = model.gate_voltage_composer.do2d('vP1', vy_min, vx_max, 100, 'vP2', vy_min, vy_max, 100)
 
@@ -33,24 +36,50 @@ vg = model.gate_voltage_composer.do2d('vP1', vy_min, vx_max, 100, 'vP2', vy_min,
 vg += model.optimal_Vg([0.5, 0.5, 0.5])
 
 
+
 # calculating the output of the charge sensor and the charge state for each gate voltage
 z, n = model.charge_sensor_open(vg)
-dz_dV1 = np.gradient(z, axis=0) + np.gradient(z, axis=1)
 
-fig, axes = plt.subplots(1, 2, sharex=True, sharey=True)
-fig.set_size_inches(10, 5)
+change_in_dot_0 = charge_state_changes(n, 0)
+change_in_dot_1 = charge_state_changes(n, 1)
+
+
+i = np.logical_and(change_in_dot_0, change_in_dot_1)
+
+v = np.logical_xor(change_in_dot_0, i)
+h = np.logical_xor(change_in_dot_1, i)
+
+no_transition = np.logical_not(charge_state_changes(n))
+
+fig, axes = plt.subplots(1, 5, sharex=True, sharey=True)
+axes = axes.flatten()
+fig.set_size_inches(10, 2)
 
 # plotting the charge stability diagram
-axes[0].imshow(z, extent=[vx_min, vx_max, vy_min, vy_max], origin='lower', aspect='auto', cmap='viridis')
+axes[0].imshow(z, extent=[vx_min, vx_max, vy_min, vy_max], origin='lower', aspect='equal', cmap='viridis')
 axes[0].set_xlabel('$Vx$')
 axes[0].set_ylabel('$Vy$')
 axes[0].set_title('$z$')
 
-# plotting the charge sensor output
-axes[1].imshow(dz_dV1, extent=[vx_min, vx_max, vy_min, vy_max], origin='lower', aspect='auto', cmap='viridis')
-axes[1].set_xlabel('$Vx$')
-axes[1].set_ylabel('$Vy$')
-axes[1].set_title('$\\frac{dz}{dVx} + \\frac{dz}{dVy}$')
+
+variables = {
+    'horizontal': h,
+    'vertical': v,
+    'interdot': i,
+    'no_transition': no_transition
+}
+
+offset = 1
+for index, (label, value) in enumerate(variables.items()):
+    axes[offset + index].imshow(value, extent=[vx_min, vx_max, vy_min, vy_max], origin='lower', aspect='equal', cmap='Greys')
+    axes[offset + index].set_xlabel('$Vx$')
+    axes[offset + index].set_ylabel('$Vy$')
+    axes[offset + index].set_title(label)
+
+    axes[offset + index].set_xlabel('$Vx$')
+    axes[offset + index].set_ylabel('$Vy$')
+
+fig.tight_layout()
 
 plt.savefig('../docs/source/figures/charge_sensing.jpg', dpi=300)
 plt.show()

@@ -78,7 +78,7 @@ def charge_state_dot_product(n: Tetrad | np.ndarray, values: Vector | np.ndarray
     return (n * values).sum(axis=-1)
 
 
-def charge_state_changes(n: Tetrad | np.ndarray) -> np.ndarray:
+def charge_state_changes(n: Tetrad | np.ndarray, dot = 'any') -> np.ndarray:
     """
     If the user passes the np.ndarray n array of shape (Nx, Ny, N_dot) which is outputted from a do2d funciton
     then this function will return a boolean array of shape (Nx-1, Ny-1, N_dot) which will be true if the
@@ -94,8 +94,13 @@ def charge_state_changes(n: Tetrad | np.ndarray) -> np.ndarray:
     if not isinstance(n, Tetrad):
         n = Tetrad(n)
 
-    change_in_x = np.logical_not(np.isclose(n[1:,:-1,], n[:-1, :-1, :], atol=1e-3)).any(axis=(-1))
-    change_in_y = np.logical_not(np.isclose(n[:-1, 1:, :], n[:-1, :-1, :], atol=1e-3)).any(axis=(-1))
+    if dot == 'any':
+        change_in_x = np.logical_not(np.isclose(n[1:,:-1, :], n[:-1, :-1, :], atol=1e-3)).any(axis=(-1))
+        change_in_y = np.logical_not(np.isclose(n[:-1, 1:, :], n[:-1, :-1, :], atol=1e-3)).any(axis=(-1))
+    else:
+        change_in_x = np.logical_not(np.isclose(n[1:, :-1, dot], n[:-1, :-1, dot], atol=1e-3))
+        change_in_y = np.logical_not(np.isclose(n[:-1, 1:, dot], n[:-1, :-1, dot], atol=1e-3))
+
     return np.logical_or(change_in_x, change_in_y)
 
 
