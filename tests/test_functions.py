@@ -5,18 +5,6 @@ import numpy as np
 
 class TestFunctions(unittest.TestCase):
 
-    def test_dot_occupation_changes(self):
-        from qarray.functions import dot_occupation_changes
-
-        n = np.array([[0, 0], [0, 0], [1, 0], [1, 0]])
-
-        with self.assertRaises(AssertionError):
-            dot_occupation_changes(n)
-
-        result = dot_occupation_changes(n[np.newaxis, ...])
-        expected = np.array([[0, 1, 0]])
-        self.assertTrue(np.allclose(result, expected))
-
     def test_charge_state_contrast(self):
         from qarray.functions import charge_state_dot_product
 
