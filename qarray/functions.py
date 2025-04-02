@@ -95,13 +95,19 @@ def charge_state_changes(n: Tetrad | np.ndarray, dot = 'any') -> np.ndarray:
         n = Tetrad(n)
 
     if dot == 'any':
-        change_in_x = np.logical_not(np.isclose(n[1:,:-1, :], n[:-1, :-1, :], atol=1e-3)).any(axis=(-1))
-        change_in_y = np.logical_not(np.isclose(n[:-1, 1:, :], n[:-1, :-1, :], atol=1e-3)).any(axis=(-1))
+        change_in_x = np.logical_not(np.isclose(n[1:, :-1, :], n[:-1, :-1, :], atol=1e-3)).any(axis=-1)
+        change_in_y = np.logical_not(np.isclose(n[:-1, 1:, :], n[:-1, :-1, :], atol=1e-3)).any(axis=-1)
     else:
         change_in_x = np.logical_not(np.isclose(n[1:, :-1, dot], n[:-1, :-1, dot], atol=1e-3))
         change_in_y = np.logical_not(np.isclose(n[:-1, 1:, dot], n[:-1, :-1, dot], atol=1e-3))
 
-    return np.logical_or(change_in_x, change_in_y)
+        # Create arrays of the same shape as n[:, :, 0] (2D grid), initialised with False
+    change = np.zeros(n.shape[:2], dtype=bool)
+
+    # Set the top-left part where the comparison was valid
+    change[:-1, :-1] = np.logical_or(change_in_x, change_in_y)
+
+    return change
 
 
 def dot_occupation_changes(n: Tetrad | np.ndarray) -> np.ndarray:
