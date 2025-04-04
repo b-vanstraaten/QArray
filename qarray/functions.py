@@ -126,7 +126,7 @@ def dot_occupation_changes(n: Tetrad | np.ndarray) -> np.ndarray:
     return charge_state_changes(n)
 
 
-def _optimal_Vg(cdd_inv: CddInv, cgd: Cgd_holes, n_charges: VectorList, rcond: float = 1e-3):
+def optimal_Vg(cdd_inv: CddInv, cgd: Cgd_holes, n_charges: VectorList, rcond: float = 1e-3):
     '''
     calculate voltage that minimises charge state's energy
 

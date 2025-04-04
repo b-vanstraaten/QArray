@@ -7,7 +7,7 @@ import unittest
 import matplotlib.pyplot as plt
 import numpy as np
 
-from qarray.functions import compute_threshold, _optimal_Vg
+from qarray.functions import compute_threshold, optimal_Vg
 from qarray.jax_implementations.default_jax import ground_state_open_default_jax, ground_state_closed_default_jax
 from qarray.python_implementations import ground_state_open_default_or_thresholded_python, \
     ground_state_closed_default_or_thresholded_python
@@ -134,7 +134,7 @@ class DoubleDotTests(unittest.TestCase):
         for _ in range(N_ITERATIONS):
             cdd, cdd_inv, cgd = randomly_generate_matrices(4)
             n_charges = np.random.choice(np.arange(0, 10), size=(N_VOLTAGES, 4)).astype(int)
-            vg = _optimal_Vg(cdd_inv=cdd_inv, cgd=cgd, n_charges=n_charges)
+            vg = optimal_Vg(cdd_inv=cdd_inv, cgd=cgd, n_charges=n_charges)
             n_rust = ground_state_open_default_or_thresholded_rust(vg, cgd, cdd_inv, 1).astype(int)
             self.assertTrue(np.allclose(n_rust, n_charges))
 

@@ -12,7 +12,7 @@ from .GateVoltageComposer import GateVoltageComposer
 from ._helper_functions import check_algorithm_and_implementation, \
     check_and_warn_user, lorentzian, convert_to_maxwell, _convert_to_maxwell_with_sensor, suppress_output
 from .ground_state import _ground_state_open, _ground_state_closed
-from ..functions import _optimal_Vg, compute_threshold
+from ..functions import optimal_Vg, compute_threshold
 from ..latching_models import LatchingBaseModel
 from ..noise_models import BaseNoiseModel
 from ..python_implementations.helper_functions import free_energy
@@ -243,7 +243,7 @@ class ChargeSensedDotArray:
         n_charges = Vector(n_charges)
         assert n_charges.shape == (
             self.n_dot + self.n_sensor,), 'The n_charge vector must be of shape (n_dot + n_sensor)'
-        return _optimal_Vg(cdd_inv=self.cdd_inv_full, cgd=self.cgd_full, n_charges=n_charges, rcond=rcond)
+        return optimal_Vg(cdd_inv=self.cdd_inv_full, cgd=self.cgd_full, n_charges=n_charges, rcond=rcond)
 
     def ground_state_open(self, vg: VectorList | np.ndarray) -> np.ndarray:
         """

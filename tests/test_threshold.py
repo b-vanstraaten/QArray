@@ -7,8 +7,8 @@ from unittest import TestCase
 import matplotlib.pyplot as plt
 import numpy as np
 
-from qarray import (_optimal_Vg,
-                    GateVoltageComposer, dot_occupation_changes)
+from qarray import (optimal_Vg,
+                    GateVoltageComposer, charge_state_changes)
 from .GLOBAL_OPTIONS import N_ITERATIONS, N_VOLTAGES
 from .helper_functions import randomly_generate_model
 
@@ -171,8 +171,8 @@ class ThresholdTests(TestCase):
 
             if not np.allclose(n_threshold_of_1, n_threshold_not_of_1):
                 fig, ax = plt.subplots(1, 3)
-                ax[0].imshow(dot_occupation_changes(n_threshold_of_1), aspect='auto', cmap='Greys')
-                ax[1].imshow(dot_occupation_changes(n_threshold_not_of_1), aspect='auto', cmap='Greys')
+                ax[0].imshow(charge_state_changes(n_threshold_of_1), aspect='auto', cmap='Greys')
+                ax[1].imshow(charge_state_changes(n_threshold_not_of_1), aspect='auto', cmap='Greys')
 
                 diff = np.abs(n_threshold_of_1 - n_threshold_not_of_1).sum(axis=-1)
                 ax[2].imshow(diff, aspect='auto')
@@ -202,8 +202,8 @@ class ThresholdTests(TestCase):
 
             if not np.allclose(n_threshold_of_1, n_threshold_not_of_1):
                 fig, ax = plt.subplots(1, 3)
-                ax[0].imshow(dot_occupation_changes(n_threshold_of_1), aspect='auto', cmap='Greys')
-                ax[1].imshow(dot_occupation_changes(n_threshold_not_of_1), aspect='auto', cmap='Greys')
+                ax[0].imshow(charge_state_changes(n_threshold_of_1), aspect='auto', cmap='Greys')
+                ax[1].imshow(charge_state_changes(n_threshold_not_of_1), aspect='auto', cmap='Greys')
 
                 diff = np.abs(n_threshold_of_1 - n_threshold_not_of_1).sum(axis=-1)
                 ax[2].imshow(diff, aspect='auto')
@@ -231,8 +231,8 @@ class ThresholdTests(TestCase):
 
             if not np.allclose(n_threshold_of_1, n_threshold_not_of_1):
                 fig, ax = plt.subplots(1, 3)
-                ax[0].imshow(dot_occupation_changes(n_threshold_of_1), aspect='auto', cmap='Greys')
-                ax[1].imshow(dot_occupation_changes(n_threshold_not_of_1), aspect='auto', cmap='Greys')
+                ax[0].imshow(charge_state_changes(n_threshold_of_1), aspect='auto', cmap='Greys')
+                ax[1].imshow(charge_state_changes(n_threshold_not_of_1), aspect='auto', cmap='Greys')
 
                 diff = np.abs(n_threshold_of_1 - n_threshold_not_of_1).sum(axis=-1)
                 ax[2].imshow(diff, aspect='auto')
@@ -262,8 +262,8 @@ class ThresholdTests(TestCase):
             if not np.allclose(n_threshold_of_1, n_threshold_not_of_1):
                 fig, ax = plt.subplots(1, 3)
 
-                ax[0].imshow(dot_occupation_changes(n_threshold_of_1), aspect='auto', cmap='Greys')
-                ax[1].imshow(dot_occupation_changes(n_threshold_not_of_1), aspect='auto', cmap='Greys')
+                ax[0].imshow(charge_state_changes(n_threshold_of_1), aspect='auto', cmap='Greys')
+                ax[1].imshow(charge_state_changes(n_threshold_not_of_1), aspect='auto', cmap='Greys')
 
                 diff = np.abs(n_threshold_of_1 - n_threshold_not_of_1).sum(axis=-1)
                 ax[2].imshow(diff, aspect='auto')
@@ -286,7 +286,7 @@ class ThresholdTests(TestCase):
 
         for model in models:
             vg = voltage_composer.do2d(1, -5, 5, N_VOLTAGES, 5, -5, 5, N_VOLTAGES)
-            vg = vg + _optimal_Vg(model.cdd_inv, model.cgd, np.random.uniform(1, 5, size=n_gate))
+            vg = vg + optimal_Vg(model.cdd_inv, model.cgd, np.random.uniform(1, 5, size=n_gate))
 
             n_threshold_not_of_1 = model.ground_state_open(vg)
 
@@ -295,8 +295,8 @@ class ThresholdTests(TestCase):
 
             if not np.allclose(n_threshold_of_1, n_threshold_not_of_1):
                 fig, ax = plt.subplots(1, 3)
-                ax[0].imshow(dot_occupation_changes(n_threshold_of_1), aspect='auto', cmap='Greys', origin='lower')
-                ax[1].imshow(dot_occupation_changes(n_threshold_not_of_1), aspect='auto', cmap='Greys', origin='lower')
+                ax[0].imshow(charge_state_changes(n_threshold_of_1), aspect='auto', cmap='Greys', origin='lower')
+                ax[1].imshow(charge_state_changes(n_threshold_not_of_1), aspect='auto', cmap='Greys', origin='lower')
 
                 diff = np.abs(n_threshold_of_1 - n_threshold_not_of_1).sum(axis=-1)
                 ax[2].imshow(diff, aspect='auto', origin='lower')
@@ -327,8 +327,8 @@ class ThresholdTests(TestCase):
             if not np.allclose(n_threshold_of_1, n_threshold_not_of_1):
                 fig, ax = plt.subplots(1, 3)
 
-                ax[0].imshow(dot_occupation_changes(n_threshold_of_1), aspect='auto', cmap='Greys')
-                ax[1].imshow(dot_occupation_changes(n_threshold_not_of_1), aspect='auto', cmap='Greys')
+                ax[0].imshow(charge_state_changes(n_threshold_of_1), aspect='auto', cmap='Greys')
+                ax[1].imshow(charge_state_changes(n_threshold_not_of_1), aspect='auto', cmap='Greys')
 
                 diff = np.abs(n_threshold_of_1 - n_threshold_not_of_1).sum(axis=-1)
                 ax[2].imshow(diff, aspect='auto')

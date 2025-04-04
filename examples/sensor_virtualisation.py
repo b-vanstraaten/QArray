@@ -39,6 +39,7 @@ vg += model.optimal_Vg([0.5, 0.5, 0.5])
 
 # calculating the output of the charge sensor and the charge state for each gate voltage
 z, n = model.charge_sensor_open(vg)
+z = z.squeeze()
 
 change_in_dot_0 = charge_state_changes(n, 0)
 change_in_dot_1 = charge_state_changes(n, 1)
@@ -83,4 +84,8 @@ fig.tight_layout()
 
 plt.savefig('../docs/source/figures/charge_sensing.jpg', dpi=300)
 plt.show()
+
+labels = np.stack(
+    [h, v, i, no_transition], axis = 0
+).astype(int)
 

@@ -6,7 +6,7 @@ from .GateVoltageComposer import GateVoltageComposer
 from ._helper_functions import (check_algorithm_and_implementation,
                                 check_and_warn_user, convert_to_maxwell)
 from .ground_state import _ground_state_open, _ground_state_closed
-from ..functions import _optimal_Vg, compute_threshold, compute_optimal_virtual_gate_matrix
+from ..functions import optimal_Vg, compute_threshold, compute_optimal_virtual_gate_matrix
 from ..latching_models import LatchingBaseModel
 from ..qarray_types import Cdd as CddType  # to avoid name clash with dataclass cdd
 from ..qarray_types import CgdNonMaxwell, CddNonMaxwell, VectorList, Cgd_holes, Cgd_electrons, PositiveValuedMatrix, \
@@ -177,7 +177,7 @@ class DotArray:
         :param rcond: the rcond parameter for the least squares solver
         :return: the optimal dot voltages of shape (n_gate,)
         """
-        return _optimal_Vg(cdd_inv=self.cdd_inv, cgd=self.cgd, n_charges=n_charges, rcond=rcond)
+        return optimal_Vg(cdd_inv=self.cdd_inv, cgd=self.cgd, n_charges=n_charges, rcond=rcond)
 
     def ground_state_open(self, vg: VectorList | np.ndarray) -> np.ndarray:
         """
