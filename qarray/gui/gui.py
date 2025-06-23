@@ -1,4 +1,5 @@
 from time import perf_counter
+import math
 import io
 import zipfile
 import base64
@@ -266,7 +267,9 @@ def run_gui(model, port=9000, run=True, print_compute_time=True, initial_dac_val
             y_gate, y_amplitude, y_resolution,
             n_charges, plot_choice,
             auto_vg, print_charge_state,
-            *dac_values
+            *dac_values,
+            minimal_area_fraction : float = 0.008,
+            maxmim_number_of_charge_states : int = 100
     ):
         """
         Update the heatmap based on the input values and return the
@@ -364,15 +367,22 @@ def run_gui(model, port=9000, run=True, print_compute_time=True, initial_dac_val
         fig.update_xaxes(title_text=x_gate, ticktext=x_text, tickvals=x_tickvals)
         fig.update_yaxes(title_text=y_gate, ticktext=y_text, tickvals=y_tickvals)
 
-        charge_states = unique_last_axis(n).astype(int)
+        n_int = n.astype(int)
+        charge_states = unique_last_axis(n_int)
+        total_size = math.prod(n.shape[:-1])
 
         # Optionally annotate the figure with the distinct charge states
         if print_charge_state == 'True':
-            if charge_states.shape[0] <= 100:
+            if charge_states.shape[0] <= maxmim_number_of_charge_states:
                 for charge_state in charge_states:
-                    ix, iy = np.where(np.all(n == charge_state, axis=-1))
+                    ix, iy = np.where(np.all(n_int == charge_state, axis=-1))
                     avg_x = iy.mean()
                     avg_y = ix.mean()
+
+                    area_fraction = ix.size / total_size
+                    if area_fraction < minimal_area_fraction:
+                        continue
+
                     label = ','.join(map(str, charge_state))
                     fig.add_annotation(
                         x=avg_x,
