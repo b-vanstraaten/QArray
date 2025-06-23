@@ -78,6 +78,7 @@ class ChargeSensedDotArray:
         self.Cds = PositiveValuedMatrix(Cds)
         self.Cgs = PositiveValuedMatrix(Cgs)
 
+
         self.n_dot = self.Cdd.shape[0]
         self.n_sensor = self.Cds.shape[0]
         self.n_gate = self.Cgd.shape[1]
@@ -86,8 +87,24 @@ class ChargeSensedDotArray:
         self.cdd, self.cdd_inv, self.cgd = convert_to_maxwell(self.Cdd, self.Cgd)
         self.cdd_full, self.cdd_inv_full, self.cgd_full = _convert_to_maxwell_with_sensor(self.Cdd, self.Cgd, self.Cds, self.Cgs)
 
-        self.cgs = self.Cgs
-        self.cds = self.Cds
+        # matching the sign of the cgd matrix to the charge carrier
+        match self.charge_carrier.lower():
+            case 'electrons' | 'electron' | 'e' | '-':
+                self.charge_carrier = 'electrons'
+                # the cgd matrix is positive for electrons
+                self.cgd = -self.cgd
+                self.cgd_full = - self.cgd_full
+
+                self.cgs = -self.Cgs
+                self.cds = -self.Cds
+
+
+            case 'holes' | 'hole' | 'h' | '+':
+                self.cgs = self.Cgs
+                self.cds = self.Cds
+            case _:
+                raise ValueError(f'charge_carrier must be either "electrons" or "holes {self.charge_carrier}"')
+
 
 
     def __post_init__(self):
@@ -231,7 +248,6 @@ class ChargeSensedDotArray:
         returns the ground state of the dot array which is a np.ndarray of shape (x_res, y_res, n_dot)
         in the closed configuration
         """
-
 
     def optimal_Vg(self, n_charges: VectorList, rcond: float = 1e-3) -> np.ndarray:
         """
