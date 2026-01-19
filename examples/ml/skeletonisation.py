@@ -8,7 +8,7 @@ from qarray import ChargeSensedDotArray, charge_state_changes, TelegraphNoise, \
 from qarray.gui import unique_last_axis
 
 
-def compute_triple_point(model, vg, charge_states):
+def compute_triple_point(model, vg, charge_states, tol = 1e-2):
     # Calculate matrices c and a
     c = np.stack([
         (Na.T @ cdd_inv @ Na - Nb.T @ cdd_inv @ Nb).squeeze()
@@ -35,8 +35,24 @@ def compute_triple_point(model, vg, charge_states):
     plane_normal = plane_normal / np.linalg.norm(plane_normal)
     d = np.dot(plane_normal, p0)
 
-    # Find the intersection point and add to solutions
-    return point_of_intersection(plane_normal, d, x, l)
+    v_interdot_true = point_of_intersection(plane_normal, d, x, l)
+
+    # Grid basis
+    origin = vg[0, 0]
+    dx = vg[0, 1] - vg[0, 0]
+    dy = vg[1, 0] - vg[0, 0]
+
+    # Solve affine system (least squares allows extrapolation)
+    A = np.stack([dy, dx], axis=1)   # shape (D, 2)
+    b = v_interdot_true - origin     # shape (D,)
+
+    iy, ix = np.linalg.lstsq(A, b, rcond=None)[0]
+
+    # Normalize (NOTE: use -1 for proper normalization)
+    ix /= (vg.shape[1] - 1)
+    iy /= (vg.shape[0] - 1)
+
+    return [ix, iy]
 
 
 def point_of_intersection(plane_normal, d, x, n):
@@ -96,8 +112,8 @@ vx_min, vx_max = -2, 2
 vy_min, vy_max = -2, 2
 
 model.gate_voltage_composer.virtual_gate_matrix = np.array([
-    [1, -0.0, 0],
-    [-0.0, 1, 0],
+    [1, -0.1, 0],
+    [-0.1, 1, 0],
     [-0.1, -0.05, 0]
 ])
 # using the dot voltage composer to create the dot voltage array for the 2d sweep
@@ -144,8 +160,8 @@ for charge_state in unique_charge_states:
 
 vg_x = vg[:, :, 0]
 vg_y = vg[:, :, 1]
-extent_x = (vg_x.min(), vg_x.max())
-extent_y = (vg_y.min(), vg_y.max())
+extent_x = (0, 1)
+extent_y = (0, 1)
 
 extent = (*extent_x, *extent_y)
 
@@ -167,8 +183,6 @@ axes[1].set_title('$n$')
 upper_triple_point_locations = np.array(upper_triple_point_locations)
 lower_triple_point_locations = np.array(lower_triple_point_locations)
 
-
-
 axes[0].scatter(upper_triple_point_locations[:, 0], upper_triple_point_locations[:, 1], color='blue')
 axes[1].scatter(upper_triple_point_locations[:, 0], upper_triple_point_locations[:, 1], color='blue')
 
@@ -177,9 +191,7 @@ axes[1].scatter(lower_triple_point_locations[:, 0], lower_triple_point_locations
 
 plt.xlim(*extent_x)
 plt.ylim(*extent_y)
-
 plt.show()
-
 
 import h5py
 
